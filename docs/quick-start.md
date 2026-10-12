@@ -4,9 +4,12 @@ From a fresh computer to code running on a Control Hub in about 15 minutes, most
 
 ## 1. Install
 
-Install [VS Code](https://code.visualstudio.com/) 1.90 or newer, or [VSCodium](https://vscodium.com/),
-then the **FTC Extension Pack**. It includes FTC Core and the Java extensions. You don't need Android
+Install [VS Code](https://code.visualstudio.com/) 1.90 or newer, or [VSCodium](https://vscodium.com/), or another IDE of your choice that uses Open VSX
+then the **FTC Code** extension. You don't need Android
 Studio, Java or the Android SDK.
+
+- [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Mallen220.ftc-core) for VS Code
+- or [Open VSX](https://open-vsx.org/extension/Mallen220/ftc-core) for VSCodium and other editors that use Open VSX.
 
 ## 2. Open a project
 
