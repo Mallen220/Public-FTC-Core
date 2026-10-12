@@ -1,0 +1,53 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "road-runner",
+  "name": "Road Runner",
+  "description": "Motion planning and trajectory following (Road Runner 1.0) with FTC integration.",
+  "category": "pathing",
+  "maintainers": [{ "name": "ACME Robotics", "url": "https://github.com/acmerobotics" }],
+  "repository": "https://github.com/acmerobotics/road-runner-ftc",
+  "documentation": "https://rr.brott.dev/docs/v1-0/installation/",
+  "quickstart": "https://github.com/acmerobotics/road-runner-quickstart",
+  "mavenRepositories": [{ "name": "ACME Robotics", "url": "https://maven.brott.dev/" }],
+  "artifacts": [
+    { "coordinate": "com.acmerobotics.roadrunner:ftc", "role": "primary" },
+    { "coordinate": "com.acmerobotics.roadrunner:core", "role": "primary" },
+    { "coordinate": "com.acmerobotics.roadrunner:actions", "role": "primary" }
+  ],
+  "versions": [
+    {
+      "version": "1.0.1",
+      "status": "documented",
+      "released": "2025-08-23",
+      "artifacts": {
+        "com.acmerobotics.roadrunner:ftc": "0.1.25",
+        "com.acmerobotics.roadrunner:core": "1.0.1",
+        "com.acmerobotics.roadrunner:actions": "1.0.1"
+      }
+    }
+  ],
+  "install": {
+    "target": "teamcode",
+    "exclusions": [
+      { "coordinate": "com.acmerobotics.roadrunner:ftc", "group": "com.acmerobotics.dashboard", "when": "sloth" },
+      { "coordinate": "com.acmerobotics.roadrunner:actions", "group": "com.acmerobotics.dashboard", "when": "sloth" }
+    ],
+    "postInstall": [
+      "Copy the teamcode folder from the Road Runner quickstart (including the messages and tuning subfolders) into TeamCode, then follow the tuning guide."
+    ]
+  },
+  "requires": [{ "library": "ftc-dashboard", "whenSloth": "ftc-dashboard-sloth", "reason": "Road Runner's FTC integration uses FTC Dashboard." }],
+  "sloth": { "compatibility": "compatible", "note": "With Sloth, exclude the standard dashboard group from roadrunner:ftc and roadrunner:actions and use slothboard." },
+  "upgradeNotes": [
+    { "fromVersion": "0.5.x", "toVersion": "1.0.0", "text": "Road Runner 1.0 is not backwards compatible with 0.5.x. Remove every 0.5.x reference from Gradle files and code first.", "url": "https://rr.brott.dev/docs/v1-0/installation/" }
+  ],
+  "verification": {
+    "sources": [
+      "https://rr.brott.dev/docs/v1-0/installation/",
+      "https://maven.brott.dev/com/acmerobotics/roadrunner/ftc/maven-metadata.xml",
+      "https://maven.brott.dev/com/acmerobotics/roadrunner/core/maven-metadata.xml"
+    ],
+    "checkedAt": "2026-10-11"
+  }
+}

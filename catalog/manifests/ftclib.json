@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "ftclib",
+  "name": "FTCLib (legacy)",
+  "description": "Original command-based library. No longer updated; new projects should use SolversLib.",
+  "category": "command-based",
+  "maintainers": [{ "name": "FTCLib", "url": "https://github.com/FTCLib" }],
+  "repository": "https://github.com/FTCLib/FTCLib",
+  "documentation": "https://docs.ftclib.org/",
+  "artifacts": [{ "coordinate": "org.ftclib.ftclib:core", "role": "primary" }],
+  "versions": [{ "version": "2.1.1", "status": "deprecated", "released": "2023-02-22", "artifacts": { "org.ftclib.ftclib:core": "2.1.1" } }],
+  "deprecated": { "reason": "FTCLib has had no release since February 2023.", "replacement": "solverslib" },
+  "install": { "target": "teamcode" },
+  "sloth": { "compatibility": "unknown" },
+  "conflicts": [{ "coordinate": "org.solverslib:core", "reason": "Do not install FTCLib and SolversLib at the same time." }],
+  "verification": {
+    "sources": ["https://repo1.maven.org/maven2/org/ftclib/ftclib/core/maven-metadata.xml", "https://docs.seattlesolvers.com/installation.md"],
+    "checkedAt": "2026-10-11"
+  }
+}

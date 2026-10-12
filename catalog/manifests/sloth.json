@@ -1,0 +1,53 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "sloth",
+  "name": "Sloth",
+  "description": "Hot reload for TeamCode: deploys changed OpMode code in seconds without reinstalling the Robot Controller app.",
+  "category": "hot-reload",
+  "maintainers": [{ "name": "Dairy Foundation", "url": "https://github.com/Dairy-Foundation" }],
+  "repository": "https://github.com/Dairy-Foundation/Sloth",
+  "documentation": "https://github.com/Dairy-Foundation/Sloth#readme",
+  "mavenRepositories": [{ "name": "Dairy Foundation", "url": "https://repo.dairy.foundation/releases" }],
+  "artifacts": [
+    { "coordinate": "dev.frozenmilk.sinister:Sloth", "role": "primary", "description": "Sloth runtime, installed with the Robot Controller app" },
+    { "coordinate": "dev.frozenmilk:Load", "role": "plugin-classpath", "description": "Gradle plugin that adds the deploySloth and removeSlothRemote tasks" }
+  ],
+  "versions": [
+    {
+      "version": "0.3.2",
+      "status": "documented",
+      "released": "2026-09-17",
+      "artifacts": { "dev.frozenmilk.sinister:Sloth": "0.3.2", "dev.frozenmilk:Load": "0.3.2" }
+    },
+    {
+      "version": "0.2.4",
+      "status": "documented",
+      "artifacts": { "dev.frozenmilk.sinister:Sloth": "0.2.4", "dev.frozenmilk:Load": "0.2.4" }
+    }
+  ],
+  "install": {
+    "target": "teamcode",
+    "gradlePlugins": [{ "id": "dev.frozenmilk.sinister.sloth.load", "classpathCoordinate": "dev.frozenmilk:Load" }],
+    "tasks": ["deploySloth", "removeSlothRemote"],
+    "postInstall": [
+      "Do one full install (FTC: Full Install) before the first hot reload; FTC Core enforces this.",
+      "Only classes in org.firstinspires.ftc.teamcode and its subpackages are hot reloaded. Changes to libraries, resources or @Pinned classes need a full install; FTC Core detects these and switches automatically."
+    ]
+  },
+  "sloth": { "compatibility": "compatible" },
+  "conflicts": [
+    { "coordinate": "dev.frozenmilk.dairy:Util", "reason": "Remove Dairy Util; Dairy Core includes Sloth instead (see the Sloth README)." },
+    { "coordinate": "dev.frozenmilk:Sinister", "reason": "Remove Sinister; Dairy Core includes Sloth instead (see the Sloth README)." },
+    { "coordinate": "com.acmerobotics.dashboard:dashboard", "reason": "The standard FTC Dashboard does not work with Sloth; use the Sloth-compatible FTC Dashboard (slothboard)." }
+  ],
+  "verification": {
+    "sources": [
+      "https://github.com/Dairy-Foundation/Sloth",
+      "https://repo.dairy.foundation/releases/dev/frozenmilk/sinister/Sloth/maven-metadata.xml",
+      "https://repo.dairy.foundation/releases/dev/frozenmilk/Load/maven-metadata.xml"
+    ],
+    "checkedAt": "2026-10-11",
+    "notes": "Task names verified from the Load 0.3.2 plugin classes (dexSloth, assembleSloth, deploySloth, removeSlothRemote)."
+  }
+}

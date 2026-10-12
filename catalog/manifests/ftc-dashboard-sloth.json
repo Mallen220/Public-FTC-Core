@@ -1,0 +1,30 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "ftc-dashboard-sloth",
+  "name": "FTC Dashboard for Sloth (slothboard)",
+  "description": "Build of FTC Dashboard that works with Sloth hot reload.",
+  "category": "dashboard",
+  "maintainers": [{ "name": "Dairy Foundation", "url": "https://github.com/Dairy-Foundation" }],
+  "repository": "https://github.com/Dairy-Foundation/Sloth",
+  "documentation": "https://github.com/Dairy-Foundation/Sloth#readme",
+  "mavenRepositories": [{ "name": "Dairy Foundation", "url": "https://repo.dairy.foundation/releases" }],
+  "artifacts": [{ "coordinate": "com.acmerobotics.slothboard:dashboard", "role": "primary" }],
+  "versions": [
+    { "version": "0.3.2+0.6.0", "status": "documented", "released": "2026-09-17", "artifacts": { "com.acmerobotics.slothboard:dashboard": "0.3.2+0.6.0" } },
+    { "version": "0.2.4+0.5.1", "status": "documented", "artifacts": { "com.acmerobotics.slothboard:dashboard": "0.2.4+0.5.1" } }
+  ],
+  "install": { "target": "teamcode" },
+  "sloth": { "compatibility": "requires-sloth" },
+  "conflicts": [
+    { "coordinate": "com.acmerobotics.dashboard:dashboard", "reason": "Do not combine the standard FTC Dashboard with the Sloth build; remove one of them." }
+  ],
+  "webInterface": { "name": "FTC Dashboard", "port": 8080, "path": "/dash" },
+  "verification": {
+    "sources": [
+      "https://github.com/Dairy-Foundation/Sloth",
+      "https://repo.dairy.foundation/releases/com/acmerobotics/slothboard/dashboard/maven-metadata.xml"
+    ],
+    "checkedAt": "2026-10-11"
+  }
+}

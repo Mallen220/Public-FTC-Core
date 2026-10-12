@@ -1,0 +1,246 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Mallen220/Public-FTC-Core/blob/main/catalog/schema/library-manifest.schema.json",
+  "title": "FTC library manifest",
+  "description": "Describes how to add an FTC library to a project. One manifest per library, maintained by the library's authors or the FTC Core maintainers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "name", "description", "maintainers", "repository", "category", "versions", "verification"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable identifier, lowercase with dashes. Never reuse an id for a different library."
+    },
+    "name": { "type": "string", "minLength": 1, "maxLength": 60 },
+    "description": { "type": "string", "minLength": 1, "maxLength": 300 },
+    "category": {
+      "enum": ["pathing", "command-based", "dashboard", "hot-reload", "hardware", "vision", "telemetry", "utility"]
+    },
+    "maintainers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": { "name": { "type": "string" }, "url": { "type": "string", "pattern": "^https://" } }
+      }
+    },
+    "repository": { "type": "string", "pattern": "^https://", "description": "Source code repository." },
+    "documentation": { "type": "string", "pattern": "^https://" },
+    "quickstart": { "type": "string", "pattern": "^https://", "description": "Quickstart project with the files a team copies after installing." },
+    "license": { "type": "string" },
+    "deprecated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason"],
+      "properties": { "reason": { "type": "string" }, "replacement": { "type": "string" } }
+    },
+    "builtIn": {
+      "type": "object",
+      "description": "The functionality ships inside the FTC SDK from this version on; nothing is installed.",
+      "additionalProperties": false,
+      "required": ["sinceSdk", "classes"],
+      "properties": {
+        "sinceSdk": { "type": "string" },
+        "classes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "note": { "type": "string" }
+      }
+    },
+    "mavenRepositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url"],
+        "properties": { "name": { "type": "string" }, "url": { "type": "string", "pattern": "^https://[^\\s'\"`$\\\\]+$" } }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["coordinate", "role"],
+        "properties": {
+          "coordinate": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+:[A-Za-z0-9_.-]+$" },
+          "role": {
+            "enum": ["primary", "optional", "plugin-classpath"],
+            "description": "primary artifacts are always added, optional ones are offered, plugin-classpath goes into buildscript."
+          },
+          "description": { "type": "string" },
+          "configuration": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9]*$", "default": "implementation" }
+        }
+      }
+    },
+    "versions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/version" }
+    },
+    "install": { "$ref": "#/definitions/install" },
+    "sloth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["compatibility"],
+      "properties": {
+        "compatibility": {
+          "enum": ["compatible", "incompatible", "variant", "requires-sloth", "unknown"],
+          "description": "variant: a separate Sloth-compatible library must be used instead (see 'variant')."
+        },
+        "variant": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["coordinate", "reason"],
+        "properties": {
+          "coordinate": { "type": "string", "description": "group:name; a trailing ':*' matches every artifact of the group." },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "requires": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["library", "reason"],
+        "properties": {
+          "library": { "type": "string" },
+          "whenSloth": { "type": "string", "description": "Library to require instead when the project uses Sloth." },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "webInterface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["port", "path"],
+      "properties": { "port": { "type": "integer" }, "path": { "type": "string" }, "name": { "type": "string" } }
+    },
+    "upgradeNotes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["toVersion", "text"],
+        "properties": {
+          "fromVersion": { "type": "string" },
+          "toVersion": { "type": "string" },
+          "text": { "type": "string" },
+          "url": { "type": "string", "pattern": "^https://" }
+        }
+      }
+    },
+    "knownIssues": {
+      "type": "array",
+      "description": "Defects in specific published versions. FTC Core flags projects that use them before the code reaches the robot.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "severity", "coordinate", "versions", "summary", "details"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Stable identifier, unique within the manifest." },
+          "severity": {
+            "enum": ["error", "warning"],
+            "description": "error: crashes the robot or makes the library unusable, so FTC Core asks before deploying; warning: shown, never blocks."
+          },
+          "coordinate": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+:[A-Za-z0-9_.-]+$", "description": "Affected artifact (group:name); must be listed in artifacts." },
+          "versions": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$" }, "description": "Exact affected versions of that artifact." },
+          "sourceContains": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The issue only applies when a project source file contains this text (for example the annotation that triggers it)."
+          },
+          "summary": { "type": "string", "minLength": 1, "maxLength": 140 },
+          "details": { "type": "string", "minLength": 1, "description": "What happens, why, and how to avoid it." },
+          "fixVersion": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$", "description": "Unaffected version FTC Core offers to switch to." },
+          "fixedIn": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$", "description": "First version with the maintainers' fix (may be a pre-release)." },
+          "logSignature": { "type": "string", "minLength": 8, "description": "Text that identifies the defect in the robot log, such as a stack frame." },
+          "url": { "type": "string", "pattern": "^https://" }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources", "checkedAt"],
+      "description": "Where the data came from and when it was last checked; shown to users.",
+      "properties": {
+        "sources": { "type": "array", "items": { "type": "string", "pattern": "^https://" }, "minItems": 1 },
+        "checkedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "notes": { "type": "string" }
+      }
+    }
+  },
+  "definitions": {
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "min": { "type": "string" }, "max": { "type": "string" } }
+    },
+    "version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "status", "artifacts"],
+      "properties": {
+        "version": { "type": "string" },
+        "status": {
+          "enum": ["tested", "documented", "prerelease", "deprecated"],
+          "description": "tested: verified by a fixture build; documented: from the maintainer's documentation or repository metadata."
+        },
+        "released": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "sdk": { "$ref": "#/definitions/range", "description": "Supported FTC SDK versions, when the maintainer declares them." },
+        "artifacts": {
+          "type": "object",
+          "description": "group:name -> version to install for this library release.",
+          "additionalProperties": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$" }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "install": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "enum": ["dependencies-file", "teamcode"],
+          "description": "dependencies-file: build.dependencies.gradle (shared by modules); teamcode: TeamCode/build.gradle."
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["coordinate", "group"],
+            "properties": {
+              "coordinate": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+:[A-Za-z0-9_.-]+$", "description": "Dependency (group:name) the exclusion is added to." },
+              "group": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+              "module": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+              "when": { "enum": ["always", "sloth"] }
+            }
+          }
+        },
+        "gradlePlugins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "classpathCoordinate"],
+            "properties": { "id": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" }, "classpathCoordinate": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+:[A-Za-z0-9_.-]+$" } }
+          }
+        },
+        "tasks": { "type": "array", "items": { "type": "string" } },
+        "postInstall": { "type": "array", "items": { "type": "string" }, "description": "Steps shown to the user after installing." }
+      }
+    }
+  }
+}

@@ -1,0 +1,693 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-10-12",
+  "libraries": [
+    {
+      "schemaVersion": 1,
+      "id": "ftc-dashboard-sloth",
+      "name": "FTC Dashboard for Sloth (slothboard)",
+      "description": "Build of FTC Dashboard that works with Sloth hot reload.",
+      "category": "dashboard",
+      "maintainers": [
+        {
+          "name": "Dairy Foundation",
+          "url": "https://github.com/Dairy-Foundation"
+        }
+      ],
+      "repository": "https://github.com/Dairy-Foundation/Sloth",
+      "documentation": "https://github.com/Dairy-Foundation/Sloth#readme",
+      "mavenRepositories": [
+        {
+          "name": "Dairy Foundation",
+          "url": "https://repo.dairy.foundation/releases"
+        }
+      ],
+      "artifacts": [
+        {
+          "coordinate": "com.acmerobotics.slothboard:dashboard",
+          "role": "primary"
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.3.2+0.6.0",
+          "status": "documented",
+          "released": "2026-09-17",
+          "artifacts": {
+            "com.acmerobotics.slothboard:dashboard": "0.3.2+0.6.0"
+          }
+        },
+        {
+          "version": "0.2.4+0.5.1",
+          "status": "documented",
+          "artifacts": {
+            "com.acmerobotics.slothboard:dashboard": "0.2.4+0.5.1"
+          }
+        }
+      ],
+      "install": {
+        "target": "teamcode"
+      },
+      "sloth": {
+        "compatibility": "requires-sloth"
+      },
+      "conflicts": [
+        {
+          "coordinate": "com.acmerobotics.dashboard:dashboard",
+          "reason": "Do not combine the standard FTC Dashboard with the Sloth build; remove one of them."
+        }
+      ],
+      "webInterface": {
+        "name": "FTC Dashboard",
+        "port": 8080,
+        "path": "/dash"
+      },
+      "verification": {
+        "sources": [
+          "https://github.com/Dairy-Foundation/Sloth",
+          "https://repo.dairy.foundation/releases/com/acmerobotics/slothboard/dashboard/maven-metadata.xml"
+        ],
+        "checkedAt": "2026-10-11"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ftc-dashboard",
+      "name": "FTC Dashboard",
+      "description": "Web dashboard for live telemetry, field drawing, graphs and tuning variables with @Config.",
+      "category": "dashboard",
+      "maintainers": [
+        {
+          "name": "ACME Robotics",
+          "url": "https://github.com/acmerobotics"
+        }
+      ],
+      "repository": "https://github.com/acmerobotics/ftc-dashboard",
+      "documentation": "https://acmerobotics.github.io/ftc-dashboard/gettingstarted",
+      "mavenRepositories": [
+        {
+          "name": "ACME Robotics",
+          "url": "https://maven.brott.dev/"
+        }
+      ],
+      "artifacts": [
+        {
+          "coordinate": "com.acmerobotics.dashboard:dashboard",
+          "role": "primary"
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.6.0",
+          "status": "documented",
+          "released": "2026-05-16",
+          "artifacts": {
+            "com.acmerobotics.dashboard:dashboard": "0.6.0"
+          }
+        },
+        {
+          "version": "0.5.1",
+          "status": "documented",
+          "artifacts": {
+            "com.acmerobotics.dashboard:dashboard": "0.5.1"
+          }
+        },
+        {
+          "version": "0.4.17",
+          "status": "documented",
+          "artifacts": {
+            "com.acmerobotics.dashboard:dashboard": "0.4.17"
+          }
+        }
+      ],
+      "install": {
+        "target": "dependencies-file"
+      },
+      "sloth": {
+        "compatibility": "variant",
+        "variant": "ftc-dashboard-sloth",
+        "note": "Sloth projects must use the Sloth-compatible build of FTC Dashboard."
+      },
+      "webInterface": {
+        "name": "FTC Dashboard",
+        "port": 8080,
+        "path": "/dash"
+      },
+      "verification": {
+        "sources": [
+          "https://acmerobotics.github.io/ftc-dashboard/gettingstarted",
+          "https://maven.brott.dev/com/acmerobotics/dashboard/dashboard/maven-metadata.xml"
+        ],
+        "checkedAt": "2026-10-11"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ftclib",
+      "name": "FTCLib (legacy)",
+      "description": "Original command-based library. No longer updated; new projects should use SolversLib.",
+      "category": "command-based",
+      "maintainers": [
+        {
+          "name": "FTCLib",
+          "url": "https://github.com/FTCLib"
+        }
+      ],
+      "repository": "https://github.com/FTCLib/FTCLib",
+      "documentation": "https://docs.ftclib.org/",
+      "artifacts": [
+        {
+          "coordinate": "org.ftclib.ftclib:core",
+          "role": "primary"
+        }
+      ],
+      "versions": [
+        {
+          "version": "2.1.1",
+          "status": "deprecated",
+          "released": "2023-02-22",
+          "artifacts": {
+            "org.ftclib.ftclib:core": "2.1.1"
+          }
+        }
+      ],
+      "deprecated": {
+        "reason": "FTCLib has had no release since February 2023.",
+        "replacement": "solverslib"
+      },
+      "install": {
+        "target": "teamcode"
+      },
+      "sloth": {
+        "compatibility": "unknown"
+      },
+      "conflicts": [
+        {
+          "coordinate": "org.solverslib:core",
+          "reason": "Do not install FTCLib and SolversLib at the same time."
+        }
+      ],
+      "verification": {
+        "sources": [
+          "https://repo1.maven.org/maven2/org/ftclib/ftclib/core/maven-metadata.xml",
+          "https://docs.seattlesolvers.com/installation.md"
+        ],
+        "checkedAt": "2026-10-11"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "gobilda-pinpoint",
+      "name": "goBILDA Pinpoint",
+      "description": "Driver for the goBILDA Pinpoint odometry computer. Included in the FTC SDK; no dependency is needed.",
+      "category": "hardware",
+      "maintainers": [
+        {
+          "name": "goBILDA and FIRST",
+          "url": "https://www.gobilda.com"
+        }
+      ],
+      "repository": "https://github.com/FIRST-Tech-Challenge/FtcRobotController",
+      "documentation": "https://ftc-docs.firstinspires.org/en/latest/",
+      "builtIn": {
+        "sinceSdk": "10.3",
+        "classes": [
+          "com.qualcomm.hardware.gobilda.GoBildaPinpointDriver"
+        ],
+        "note": "See the SensorGoBildaPinpoint sample in FtcRobotController. SDK 11.1 added Pinpoint v2 support."
+      },
+      "versions": [
+        {
+          "version": "sdk",
+          "status": "documented",
+          "sdk": {
+            "min": "10.3"
+          },
+          "artifacts": {}
+        }
+      ],
+      "sloth": {
+        "compatibility": "compatible"
+      },
+      "verification": {
+        "sources": [
+          "https://github.com/FIRST-Tech-Challenge/FtcRobotController/blob/v12.0/README.md"
+        ],
+        "checkedAt": "2026-10-11",
+        "notes": "GoBildaPinpointDriver is present in org.firstinspires.ftc:Hardware 11.0.0 and 12.0.0; the SDK release notes list Pinpoint support as added in 10.3 and Pinpoint v2 support in 11.1."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "panels",
+      "name": "Panels",
+      "description": "All-in-one plugin-based robot dashboard: OpMode control, telemetry, field view, graphs, capture and live configurables.",
+      "category": "dashboard",
+      "maintainers": [
+        {
+          "name": "Lazar (team 19234 ByteForce)",
+          "url": "https://bylazar.com"
+        }
+      ],
+      "repository": "https://github.com/ftcontrol/ftcontrol-panels",
+      "documentation": "https://panels.bylazar.com/docs/com.bylazar.docs/Prerequisites",
+      "quickstart": "https://github.com/ftcontrol/Panels-Quickstart-Java",
+      "mavenRepositories": [
+        {
+          "name": "Bylazar",
+          "url": "https://mymaven.bylazar.com/releases"
+        },
+        {
+          "name": "Dairy Foundation (Sloth, used by Panels for scanning as of SDK 12)",
+          "url": "https://repo.dairy.foundation/releases"
+        }
+      ],
+      "artifacts": [
+        {
+          "coordinate": "com.bylazar:fullpanels",
+          "role": "primary",
+          "description": "Panels core with every official plugin"
+        }
+      ],
+      "versions": [
+        {
+          "version": "1.0.18",
+          "status": "documented",
+          "released": "2026-10-07",
+          "sdk": {
+            "min": "12.0"
+          },
+          "artifacts": {
+            "com.bylazar:fullpanels": "1.0.18"
+          },
+          "notes": "Panels' update guide requires FTC SDK 12.0.0 and both Maven repositories."
+        }
+      ],
+      "install": {
+        "target": "teamcode",
+        "postInstall": [
+          "Run a clean build after updating Panels so old Panels assets are not reused (FTC: Clean Build).",
+          "Do not mix com.bylazar:fullpanels with the individual Panels plugin artifacts."
+        ]
+      },
+      "sloth": {
+        "compatibility": "compatible",
+        "note": "The official com.bylazar artifacts support Sloth directly; the older com.bylazar.sloth artifacts are no longer needed."
+      },
+      "conflicts": [
+        {
+          "coordinate": "com.bylazar.sloth:*",
+          "reason": "Switch from the old com.bylazar.sloth artifacts to the official com.bylazar artifacts."
+        },
+        {
+          "coordinate": "com.bylazar:panels",
+          "reason": "fullpanels already contains the Panels core; do not mix fullpanels with individual plugins."
+        }
+      ],
+      "webInterface": {
+        "name": "Panels",
+        "port": 8001,
+        "path": "/"
+      },
+      "upgradeNotes": [
+        {
+          "toVersion": "1.0.18",
+          "text": "Before updating: commit your code, update the FTC SDK to 12.0.0, make sure both the Bylazar and Dairy repositories are present, and do a clean build.",
+          "url": "https://panels.bylazar.com/docs/com.bylazar.docs/Prerequisites"
+        }
+      ],
+      "verification": {
+        "sources": [
+          "https://github.com/ftcontrol/ftcontrol-panels/blob/main/library/Docs/web/src/docs/Prerequisites.svelte",
+          "https://mymaven.bylazar.com/releases/com/bylazar/fullpanels/maven-metadata.xml"
+        ],
+        "checkedAt": "2026-10-11"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "pedro-pathing",
+      "name": "Pedro Pathing",
+      "description": "Path following using Bezier curves, with tuning OpModes.",
+      "category": "pathing",
+      "maintainers": [
+        {
+          "name": "Pedro Pathing",
+          "url": "https://github.com/Pedro-Pathing"
+        }
+      ],
+      "repository": "https://github.com/Pedro-Pathing/PedroPathing",
+      "documentation": "https://pedropathing.com/docs/pathing/installation",
+      "quickstart": "https://github.com/Pedro-Pathing/Quickstart",
+      "mavenRepositories": [
+        {
+          "name": "Dairy Foundation",
+          "url": "https://repo.dairy.foundation/releases/"
+        }
+      ],
+      "artifacts": [
+        {
+          "coordinate": "com.pedropathing:revhub",
+          "role": "primary"
+        },
+        {
+          "coordinate": "com.pedropathing:tuning",
+          "role": "optional",
+          "description": "Tuning OpModes"
+        }
+      ],
+      "versions": [
+        {
+          "version": "3.0.1",
+          "status": "documented",
+          "released": "2026-09-18",
+          "artifacts": {
+            "com.pedropathing:revhub": "3.0.1",
+            "com.pedropathing:tuning": "1.0.1"
+          },
+          "notes": "Same pairing as the Pedro Pathing Quickstart. tuning 1.0.2 has a crash (see known issues)."
+        }
+      ],
+      "install": {
+        "target": "dependencies-file",
+        "postInstall": [
+          "Copy the pedro package from the Pedro Pathing Quickstart (TeamCode/src/main/java/org/firstinspires/ftc/teamcode/pedro) into TeamCode, then follow the tuning guide."
+        ]
+      },
+      "sloth": {
+        "compatibility": "unknown"
+      },
+      "conflicts": [
+        {
+          "coordinate": "com.pedropathing:ftc",
+          "reason": "com.pedropathing:ftc is the 2.x line; Pedro Pathing 3 uses com.pedropathing:revhub. Remove the old artifact when upgrading."
+        }
+      ],
+      "knownIssues": [
+        {
+          "id": "tuning-1-0-2-tuner-scanner-crash",
+          "severity": "error",
+          "coordinate": "com.pedropathing:tuning",
+          "versions": [
+            "1.0.2"
+          ],
+          "sourceContains": "@Tuner",
+          "summary": "AutoTune crashes while TeamCode loads: the robot stops after a Sloth hot reload and AutoTune lists no procedures.",
+          "details": "TunerScanner in com.pedropathing:tuning 1.0.2 calls Map.putIfAbsent(...).add(...), which throws a NullPointerException the first time it scans a class with @Tuner methods (usually Tuning.java). The tuning library always brings in the Sloth runtime, which treats this as a fatal loading error: loading TeamCode fails when the app starts, and after a hot reload the robot stops with \"User code threw an uncaught exception\". Versions 1.0.0 and 1.0.1 do not have this code; 1.0.3-beta.1 fixes it. The Pedro Pathing Quickstart uses 1.0.1.",
+          "fixVersion": "1.0.1",
+          "fixedIn": "1.0.3-beta.1",
+          "logSignature": "TunerScanner.scan(TunerScanner.java:59)",
+          "url": "https://github.com/Pedro-Pathing/Quickstart/blob/master/build.dependencies.gradle"
+        }
+      ],
+      "upgradeNotes": [
+        {
+          "fromVersion": "2.x",
+          "toVersion": "3.0.0",
+          "text": "Pedro Pathing 3 replaces com.pedropathing:ftc with com.pedropathing:revhub. SolversLib 0.3.6 or newer is required for its Pedro Pathing module.",
+          "url": "https://pedropathing.com/docs/pathing/installation"
+        }
+      ],
+      "verification": {
+        "sources": [
+          "https://pedropathing.com/docs/pathing/installation",
+          "https://repo1.maven.org/maven2/com/pedropathing/revhub/maven-metadata.xml",
+          "https://repo1.maven.org/maven2/com/pedropathing/tuning/maven-metadata.xml",
+          "https://github.com/Pedro-Pathing/Quickstart/blob/master/build.dependencies.gradle",
+          "https://repo1.maven.org/maven2/com/pedropathing/tuning/1.0.2/tuning-1.0.2-sources.jar"
+        ],
+        "checkedAt": "2026-10-11",
+        "notes": "Artifacts are published on Maven Central; the documentation also adds the Dairy Foundation repository. The tuning crash was found from a robot log and confirmed in the 1.0.0, 1.0.1, 1.0.2 and 1.0.3-beta.1 sources."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "road-runner",
+      "name": "Road Runner",
+      "description": "Motion planning and trajectory following (Road Runner 1.0) with FTC integration.",
+      "category": "pathing",
+      "maintainers": [
+        {
+          "name": "ACME Robotics",
+          "url": "https://github.com/acmerobotics"
+        }
+      ],
+      "repository": "https://github.com/acmerobotics/road-runner-ftc",
+      "documentation": "https://rr.brott.dev/docs/v1-0/installation/",
+      "quickstart": "https://github.com/acmerobotics/road-runner-quickstart",
+      "mavenRepositories": [
+        {
+          "name": "ACME Robotics",
+          "url": "https://maven.brott.dev/"
+        }
+      ],
+      "artifacts": [
+        {
+          "coordinate": "com.acmerobotics.roadrunner:ftc",
+          "role": "primary"
+        },
+        {
+          "coordinate": "com.acmerobotics.roadrunner:core",
+          "role": "primary"
+        },
+        {
+          "coordinate": "com.acmerobotics.roadrunner:actions",
+          "role": "primary"
+        }
+      ],
+      "versions": [
+        {
+          "version": "1.0.1",
+          "status": "documented",
+          "released": "2025-08-23",
+          "artifacts": {
+            "com.acmerobotics.roadrunner:ftc": "0.1.25",
+            "com.acmerobotics.roadrunner:core": "1.0.1",
+            "com.acmerobotics.roadrunner:actions": "1.0.1"
+          }
+        }
+      ],
+      "install": {
+        "target": "teamcode",
+        "exclusions": [
+          {
+            "coordinate": "com.acmerobotics.roadrunner:ftc",
+            "group": "com.acmerobotics.dashboard",
+            "when": "sloth"
+          },
+          {
+            "coordinate": "com.acmerobotics.roadrunner:actions",
+            "group": "com.acmerobotics.dashboard",
+            "when": "sloth"
+          }
+        ],
+        "postInstall": [
+          "Copy the teamcode folder from the Road Runner quickstart (including the messages and tuning subfolders) into TeamCode, then follow the tuning guide."
+        ]
+      },
+      "requires": [
+        {
+          "library": "ftc-dashboard",
+          "whenSloth": "ftc-dashboard-sloth",
+          "reason": "Road Runner's FTC integration uses FTC Dashboard."
+        }
+      ],
+      "sloth": {
+        "compatibility": "compatible",
+        "note": "With Sloth, exclude the standard dashboard group from roadrunner:ftc and roadrunner:actions and use slothboard."
+      },
+      "upgradeNotes": [
+        {
+          "fromVersion": "0.5.x",
+          "toVersion": "1.0.0",
+          "text": "Road Runner 1.0 is not backwards compatible with 0.5.x. Remove every 0.5.x reference from Gradle files and code first.",
+          "url": "https://rr.brott.dev/docs/v1-0/installation/"
+        }
+      ],
+      "verification": {
+        "sources": [
+          "https://rr.brott.dev/docs/v1-0/installation/",
+          "https://maven.brott.dev/com/acmerobotics/roadrunner/ftc/maven-metadata.xml",
+          "https://maven.brott.dev/com/acmerobotics/roadrunner/core/maven-metadata.xml"
+        ],
+        "checkedAt": "2026-10-11"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "sloth",
+      "name": "Sloth",
+      "description": "Hot reload for TeamCode: deploys changed OpMode code in seconds without reinstalling the Robot Controller app.",
+      "category": "hot-reload",
+      "maintainers": [
+        {
+          "name": "Dairy Foundation",
+          "url": "https://github.com/Dairy-Foundation"
+        }
+      ],
+      "repository": "https://github.com/Dairy-Foundation/Sloth",
+      "documentation": "https://github.com/Dairy-Foundation/Sloth#readme",
+      "mavenRepositories": [
+        {
+          "name": "Dairy Foundation",
+          "url": "https://repo.dairy.foundation/releases"
+        }
+      ],
+      "artifacts": [
+        {
+          "coordinate": "dev.frozenmilk.sinister:Sloth",
+          "role": "primary",
+          "description": "Sloth runtime, installed with the Robot Controller app"
+        },
+        {
+          "coordinate": "dev.frozenmilk:Load",
+          "role": "plugin-classpath",
+          "description": "Gradle plugin that adds the deploySloth and removeSlothRemote tasks"
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.3.2",
+          "status": "documented",
+          "released": "2026-09-17",
+          "artifacts": {
+            "dev.frozenmilk.sinister:Sloth": "0.3.2",
+            "dev.frozenmilk:Load": "0.3.2"
+          }
+        },
+        {
+          "version": "0.2.4",
+          "status": "documented",
+          "artifacts": {
+            "dev.frozenmilk.sinister:Sloth": "0.2.4",
+            "dev.frozenmilk:Load": "0.2.4"
+          }
+        }
+      ],
+      "install": {
+        "target": "teamcode",
+        "gradlePlugins": [
+          {
+            "id": "dev.frozenmilk.sinister.sloth.load",
+            "classpathCoordinate": "dev.frozenmilk:Load"
+          }
+        ],
+        "tasks": [
+          "deploySloth",
+          "removeSlothRemote"
+        ],
+        "postInstall": [
+          "Do one full install (FTC: Full Install) before the first hot reload; FTC Core enforces this.",
+          "Only classes in org.firstinspires.ftc.teamcode and its subpackages are hot reloaded. Changes to libraries, resources or @Pinned classes need a full install; FTC Core detects these and switches automatically."
+        ]
+      },
+      "sloth": {
+        "compatibility": "compatible"
+      },
+      "conflicts": [
+        {
+          "coordinate": "dev.frozenmilk.dairy:Util",
+          "reason": "Remove Dairy Util; Dairy Core includes Sloth instead (see the Sloth README)."
+        },
+        {
+          "coordinate": "dev.frozenmilk:Sinister",
+          "reason": "Remove Sinister; Dairy Core includes Sloth instead (see the Sloth README)."
+        },
+        {
+          "coordinate": "com.acmerobotics.dashboard:dashboard",
+          "reason": "The standard FTC Dashboard does not work with Sloth; use the Sloth-compatible FTC Dashboard (slothboard)."
+        }
+      ],
+      "verification": {
+        "sources": [
+          "https://github.com/Dairy-Foundation/Sloth",
+          "https://repo.dairy.foundation/releases/dev/frozenmilk/sinister/Sloth/maven-metadata.xml",
+          "https://repo.dairy.foundation/releases/dev/frozenmilk/Load/maven-metadata.xml"
+        ],
+        "checkedAt": "2026-10-11",
+        "notes": "Task names verified from the Load 0.3.2 plugin classes (dexSloth, assembleSloth, deploySloth, removeSlothRemote)."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "solverslib",
+      "name": "SolversLib",
+      "description": "Command-based programming framework and utilities (the maintained successor of FTCLib), package com.seattlesolvers.solverslib.",
+      "category": "command-based",
+      "maintainers": [
+        {
+          "name": "Seattle Solvers (FTC 23511)",
+          "url": "https://github.com/FTC-23511"
+        }
+      ],
+      "repository": "https://github.com/FTC-23511/SolversLib",
+      "documentation": "https://docs.seattlesolvers.com/installation",
+      "quickstart": "https://github.com/FTC-23511/SolversLib-Quickstart",
+      "mavenRepositories": [
+        {
+          "name": "Dairy Foundation",
+          "url": "https://repo.dairy.foundation/releases"
+        }
+      ],
+      "artifacts": [
+        {
+          "coordinate": "org.solverslib:core",
+          "role": "primary"
+        },
+        {
+          "coordinate": "org.solverslib:pedroPathing",
+          "role": "optional",
+          "description": "Pedro Pathing integration (needs Pedro Pathing 3.0.0 or newer)"
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.3.6",
+          "status": "documented",
+          "released": "2026-09-16",
+          "artifacts": {
+            "org.solverslib:core": "0.3.6",
+            "org.solverslib:pedroPathing": "0.3.6"
+          },
+          "notes": "Works with Pedro Pathing 3.0.0 and newer."
+        },
+        {
+          "version": "0.3.5",
+          "status": "documented",
+          "artifacts": {
+            "org.solverslib:core": "0.3.5",
+            "org.solverslib:pedroPathing": "0.3.5"
+          },
+          "notes": "Works with Pedro Pathing 2.x."
+        }
+      ],
+      "install": {
+        "target": "teamcode"
+      },
+      "sloth": {
+        "compatibility": "unknown"
+      },
+      "conflicts": [
+        {
+          "coordinate": "org.ftclib.ftclib:core",
+          "reason": "Do not install FTCLib and SolversLib at the same time."
+        }
+      ],
+      "upgradeNotes": [
+        {
+          "fromVersion": "FTCLib",
+          "toVersion": "0.3.6",
+          "text": "Replace com.arcrobotics.ftclib imports with com.seattlesolvers.solverslib and remove the FTCLib dependency.",
+          "url": "https://docs.seattlesolvers.com/installation"
+        }
+      ],
+      "verification": {
+        "sources": [
+          "https://docs.seattlesolvers.com/installation.md",
+          "https://repo.dairy.foundation/releases/org/solverslib/core/maven-metadata.xml"
+        ],
+        "checkedAt": "2026-10-11"
+      }
+    }
+  ]
+}

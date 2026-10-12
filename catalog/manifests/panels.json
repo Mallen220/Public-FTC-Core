@@ -1,0 +1,54 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "panels",
+  "name": "Panels",
+  "description": "All-in-one plugin-based robot dashboard: OpMode control, telemetry, field view, graphs, capture and live configurables.",
+  "category": "dashboard",
+  "maintainers": [{ "name": "Lazar (team 19234 ByteForce)", "url": "https://bylazar.com" }],
+  "repository": "https://github.com/ftcontrol/ftcontrol-panels",
+  "documentation": "https://panels.bylazar.com/docs/com.bylazar.docs/Prerequisites",
+  "quickstart": "https://github.com/ftcontrol/Panels-Quickstart-Java",
+  "mavenRepositories": [
+    { "name": "Bylazar", "url": "https://mymaven.bylazar.com/releases" },
+    { "name": "Dairy Foundation (Sloth, used by Panels for scanning as of SDK 12)", "url": "https://repo.dairy.foundation/releases" }
+  ],
+  "artifacts": [{ "coordinate": "com.bylazar:fullpanels", "role": "primary", "description": "Panels core with every official plugin" }],
+  "versions": [
+    {
+      "version": "1.0.18",
+      "status": "documented",
+      "released": "2026-10-07",
+      "sdk": { "min": "12.0" },
+      "artifacts": { "com.bylazar:fullpanels": "1.0.18" },
+      "notes": "Panels' update guide requires FTC SDK 12.0.0 and both Maven repositories."
+    }
+  ],
+  "install": {
+    "target": "teamcode",
+    "postInstall": [
+      "Run a clean build after updating Panels so old Panels assets are not reused (FTC: Clean Build).",
+      "Do not mix com.bylazar:fullpanels with the individual Panels plugin artifacts."
+    ]
+  },
+  "sloth": { "compatibility": "compatible", "note": "The official com.bylazar artifacts support Sloth directly; the older com.bylazar.sloth artifacts are no longer needed." },
+  "conflicts": [
+    { "coordinate": "com.bylazar.sloth:*", "reason": "Switch from the old com.bylazar.sloth artifacts to the official com.bylazar artifacts." },
+    { "coordinate": "com.bylazar:panels", "reason": "fullpanels already contains the Panels core; do not mix fullpanels with individual plugins." }
+  ],
+  "webInterface": { "name": "Panels", "port": 8001, "path": "/" },
+  "upgradeNotes": [
+    {
+      "toVersion": "1.0.18",
+      "text": "Before updating: commit your code, update the FTC SDK to 12.0.0, make sure both the Bylazar and Dairy repositories are present, and do a clean build.",
+      "url": "https://panels.bylazar.com/docs/com.bylazar.docs/Prerequisites"
+    }
+  ],
+  "verification": {
+    "sources": [
+      "https://github.com/ftcontrol/ftcontrol-panels/blob/main/library/Docs/web/src/docs/Prerequisites.svelte",
+      "https://mymaven.bylazar.com/releases/com/bylazar/fullpanels/maven-metadata.xml"
+    ],
+    "checkedAt": "2026-10-11"
+  }
+}

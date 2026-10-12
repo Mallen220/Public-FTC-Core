@@ -1,0 +1,28 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "ftc-dashboard",
+  "name": "FTC Dashboard",
+  "description": "Web dashboard for live telemetry, field drawing, graphs and tuning variables with @Config.",
+  "category": "dashboard",
+  "maintainers": [{ "name": "ACME Robotics", "url": "https://github.com/acmerobotics" }],
+  "repository": "https://github.com/acmerobotics/ftc-dashboard",
+  "documentation": "https://acmerobotics.github.io/ftc-dashboard/gettingstarted",
+  "mavenRepositories": [{ "name": "ACME Robotics", "url": "https://maven.brott.dev/" }],
+  "artifacts": [{ "coordinate": "com.acmerobotics.dashboard:dashboard", "role": "primary" }],
+  "versions": [
+    { "version": "0.6.0", "status": "documented", "released": "2026-05-16", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.6.0" } },
+    { "version": "0.5.1", "status": "documented", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.5.1" } },
+    { "version": "0.4.17", "status": "documented", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.4.17" } }
+  ],
+  "install": { "target": "dependencies-file" },
+  "sloth": { "compatibility": "variant", "variant": "ftc-dashboard-sloth", "note": "Sloth projects must use the Sloth-compatible build of FTC Dashboard." },
+  "webInterface": { "name": "FTC Dashboard", "port": 8080, "path": "/dash" },
+  "verification": {
+    "sources": [
+      "https://acmerobotics.github.io/ftc-dashboard/gettingstarted",
+      "https://maven.brott.dev/com/acmerobotics/dashboard/dashboard/maven-metadata.xml"
+    ],
+    "checkedAt": "2026-10-11"
+  }
+}

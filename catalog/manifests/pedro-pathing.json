@@ -1,0 +1,65 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "pedro-pathing",
+  "name": "Pedro Pathing",
+  "description": "Path following using Bezier curves, with tuning OpModes.",
+  "category": "pathing",
+  "maintainers": [{ "name": "Pedro Pathing", "url": "https://github.com/Pedro-Pathing" }],
+  "repository": "https://github.com/Pedro-Pathing/PedroPathing",
+  "documentation": "https://pedropathing.com/docs/pathing/installation",
+  "quickstart": "https://github.com/Pedro-Pathing/Quickstart",
+  "mavenRepositories": [{ "name": "Dairy Foundation", "url": "https://repo.dairy.foundation/releases/" }],
+  "artifacts": [
+    { "coordinate": "com.pedropathing:revhub", "role": "primary" },
+    { "coordinate": "com.pedropathing:tuning", "role": "optional", "description": "Tuning OpModes" }
+  ],
+  "versions": [
+    {
+      "version": "3.0.1",
+      "status": "documented",
+      "released": "2026-09-18",
+      "artifacts": { "com.pedropathing:revhub": "3.0.1", "com.pedropathing:tuning": "1.0.1" },
+      "notes": "Same pairing as the Pedro Pathing Quickstart. tuning 1.0.2 has a crash (see known issues)."
+    }
+  ],
+  "install": {
+    "target": "dependencies-file",
+    "postInstall": [
+      "Copy the pedro package from the Pedro Pathing Quickstart (TeamCode/src/main/java/org/firstinspires/ftc/teamcode/pedro) into TeamCode, then follow the tuning guide."
+    ]
+  },
+  "sloth": { "compatibility": "unknown" },
+  "conflicts": [
+    { "coordinate": "com.pedropathing:ftc", "reason": "com.pedropathing:ftc is the 2.x line; Pedro Pathing 3 uses com.pedropathing:revhub. Remove the old artifact when upgrading." }
+  ],
+  "knownIssues": [
+    {
+      "id": "tuning-1-0-2-tuner-scanner-crash",
+      "severity": "error",
+      "coordinate": "com.pedropathing:tuning",
+      "versions": ["1.0.2"],
+      "sourceContains": "@Tuner",
+      "summary": "AutoTune crashes while TeamCode loads: the robot stops after a Sloth hot reload and AutoTune lists no procedures.",
+      "details": "TunerScanner in com.pedropathing:tuning 1.0.2 calls Map.putIfAbsent(...).add(...), which throws a NullPointerException the first time it scans a class with @Tuner methods (usually Tuning.java). The tuning library always brings in the Sloth runtime, which treats this as a fatal loading error: loading TeamCode fails when the app starts, and after a hot reload the robot stops with \"User code threw an uncaught exception\". Versions 1.0.0 and 1.0.1 do not have this code; 1.0.3-beta.1 fixes it. The Pedro Pathing Quickstart uses 1.0.1.",
+      "fixVersion": "1.0.1",
+      "fixedIn": "1.0.3-beta.1",
+      "logSignature": "TunerScanner.scan(TunerScanner.java:59)",
+      "url": "https://github.com/Pedro-Pathing/Quickstart/blob/master/build.dependencies.gradle"
+    }
+  ],
+  "upgradeNotes": [
+    { "fromVersion": "2.x", "toVersion": "3.0.0", "text": "Pedro Pathing 3 replaces com.pedropathing:ftc with com.pedropathing:revhub. SolversLib 0.3.6 or newer is required for its Pedro Pathing module.", "url": "https://pedropathing.com/docs/pathing/installation" }
+  ],
+  "verification": {
+    "sources": [
+      "https://pedropathing.com/docs/pathing/installation",
+      "https://repo1.maven.org/maven2/com/pedropathing/revhub/maven-metadata.xml",
+      "https://repo1.maven.org/maven2/com/pedropathing/tuning/maven-metadata.xml",
+      "https://github.com/Pedro-Pathing/Quickstart/blob/master/build.dependencies.gradle",
+      "https://repo1.maven.org/maven2/com/pedropathing/tuning/1.0.2/tuning-1.0.2-sources.jar"
+    ],
+    "checkedAt": "2026-10-11",
+    "notes": "Artifacts are published on Maven Central; the documentation also adds the Dairy Foundation repository. The tuning crash was found from a robot log and confirmed in the 1.0.0, 1.0.1, 1.0.2 and 1.0.3-beta.1 sources."
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "gobilda-pinpoint",
+  "name": "goBILDA Pinpoint",
+  "description": "Driver for the goBILDA Pinpoint odometry computer. Included in the FTC SDK; no dependency is needed.",
+  "category": "hardware",
+  "maintainers": [
+    {
+      "name": "goBILDA and FIRST",
+      "url": "https://www.gobilda.com"
+    }
+  ],
+  "repository": "https://github.com/FIRST-Tech-Challenge/FtcRobotController",
+  "documentation": "https://ftc-docs.firstinspires.org/en/latest/",
+  "builtIn": {
+    "sinceSdk": "10.3",
+    "classes": [
+      "com.qualcomm.hardware.gobilda.GoBildaPinpointDriver"
+    ],
+    "note": "See the SensorGoBildaPinpoint sample in FtcRobotController. SDK 11.1 added Pinpoint v2 support."
+  },
+  "versions": [
+    {
+      "version": "sdk",
+      "status": "documented",
+      "sdk": {
+        "min": "10.3"
+      },
+      "artifacts": {}
+    }
+  ],
+  "sloth": {
+    "compatibility": "compatible"
+  },
+  "verification": {
+    "sources": [
+      "https://github.com/FIRST-Tech-Challenge/FtcRobotController/blob/v12.0/README.md"
+    ],
+    "checkedAt": "2026-10-11",
+    "notes": "GoBildaPinpointDriver is present in org.firstinspires.ftc:Hardware 11.0.0 and 12.0.0; the SDK release notes list Pinpoint support as added in 10.3 and Pinpoint v2 support in 11.1."
+  }
+}
