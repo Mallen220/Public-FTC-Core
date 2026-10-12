@@ -2,7 +2,9 @@
 
 FTC Core is a VS Code and VSCodium extension for building and deploying FIRST Tech Challenge robot code
 without Android Studio. Install it from the
-[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Mallen220.ftc-core).
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=Mallen220.ftc-core) for
+VS Code, or from [Open VSX](https://open-vsx.org/extension/Mallen220/ftc-core) for VSCodium and other
+editors that use Open VSX.
 
 This repository has the extension's documentation and its library catalog. The extension's source code
 isn't public.
