@@ -1,0 +1,10 @@
+{
+  "name": "ftc-core-catalog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+  },
+  "devDependencies": {
+    "ajv": "8.20.0"
+  }
+}
