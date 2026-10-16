@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "node scripts/catalog.mjs validate",
-    "build": "node scripts/catalog.mjs build"
+    "validate": "node scripts/catalog.mjs validate && node scripts/snippets.mjs validate",
+    "build": "node scripts/catalog.mjs build && node scripts/snippets.mjs build"
   },
   "devDependencies": {
     "ajv": "8.20.0"

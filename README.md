@@ -6,7 +6,7 @@ without Android Studio. Install it from the
 VS Code, or from [Open VSX](https://open-vsx.org/extension/Mallen220/ftc-core) for VSCodium and other
 editors that use Open VSX.
 
-This repository has the extension's documentation and its library catalog. The extension's source code
+This repository has the extension's documentation, its library catalog and its code snippets. The extension's source code
 isn't public.
 
 > FTC Core is an unofficial community project. It isn't made, endorsed or supported by *FIRST*® or the
@@ -21,6 +21,7 @@ isn't public.
 - [Connecting to the robot](docs/robot-connection.md)
 - [Sloth hot reload](docs/sloth.md)
 - [Libraries](docs/libraries.md)
+- [Snippets](docs/snippets.md)
 - [Updating the FTC SDK](docs/sdk-updates.md)
 - [Troubleshooting](docs/troubleshooting.md)
 
@@ -32,6 +33,12 @@ merged here reaches everyone without an extension update.
 
 If a library is missing or out of date, [open an issue](https://github.com/Mallen220/Public-FTC-Core/issues)
 or send a pull request. [CONTRIBUTING.md](CONTRIBUTING.md) explains how.
+
+## Snippets
+
+The code snippets FTC Core offers live in [`snippets/`](snippets) and are listed in
+[docs/snippets.md](docs/snippets.md). The extension downloads them once a day too. Pull requests that fix
+or add a snippet are welcome; [CONTRIBUTING.md](CONTRIBUTING.md#snippets) explains how.
 
 ## Bugs
 

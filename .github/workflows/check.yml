@@ -1,4 +1,4 @@
-name: Check catalog
+name: Check catalog and snippets
 
 on:
   pull_request:
@@ -18,5 +18,5 @@ jobs:
           node-version: 22
       - run: npm ci
       - run: npm run build
-      - name: Make sure catalog/dist/index.json was rebuilt
-        run: git diff --exit-code catalog/dist
+      - name: Make sure catalog/dist, snippets/dist and docs/snippets.md were rebuilt
+        run: git diff --exit-code catalog/dist snippets/dist docs/snippets.md
