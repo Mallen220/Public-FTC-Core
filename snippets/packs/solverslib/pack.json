@@ -1,0 +1,12 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "SolversLib",
+  "description": "SolversLib: command-based OpModes, subsystems, commands, motors and PIDF control.",
+  "appliesTo": "SolversLib (`org.solverslib`).",
+  "prefix": "solvers_",
+  "requires": {
+    "anyOf": [
+      "org.solverslib:*"
+    ]
+  }
+}

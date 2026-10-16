@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "FTC SDK vision (12.0+)",
+  "description": "Reading AprilTag detections in SDK 12.0 and newer.",
+  "appliesTo": "FTC SDK 12.0 and newer (AprilTag detections changed in 12.0).",
+  "prefix": "ftc_",
+  "requires": {
+    "sdkMin": "12.0"
+  }
+}

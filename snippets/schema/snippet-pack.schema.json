@@ -1,0 +1,163 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Mallen220/Public-FTC-Core/blob/main/snippets/schema/snippet-pack.schema.json",
+  "title": "FTC Core snippet pack",
+  "description": "A set of code snippets for the FTC SDK or one library. FTC Core offers a pack only in projects that use what it names in `requires`.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "prefix",
+    "snippets"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable identifier, the same as the pack folder name. Never reuse an id for a different pack."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "appliesTo": {
+      "type": "string",
+      "maxLength": 300,
+      "description": "Plain-language version of requires, shown in the snippet docs."
+    },
+    "prefix": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*_([a-z0-9]+_)*$",
+      "description": "What every snippet prefix in the pack starts with, such as pedro_. Typing it lists the pack."
+    },
+    "requires": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "When the pack is offered. With no requires it is offered in every FTC project.",
+      "properties": {
+        "anyOf": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/requirement"
+          }
+        },
+        "allOf": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/requirement"
+          }
+        },
+        "sdkMin": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)*$",
+          "description": "Lowest FTC SDK version, inclusive."
+        },
+        "sdkMax": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)*$",
+          "description": "First FTC SDK version the pack is NOT for."
+        }
+      }
+    },
+    "snippets": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "The snippets, keyed by a unique title.",
+      "additionalProperties": {
+        "$ref": "#/definitions/snippet"
+      }
+    }
+  },
+  "definitions": {
+    "requirement": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[\\w.-]+:([\\w.-]+|\\*)$",
+          "description": "group:name, or group:* for any artifact in the group."
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "coordinate"
+          ],
+          "properties": {
+            "coordinate": {
+              "type": "string",
+              "pattern": "^[\\w.-]+:([\\w.-]+|\\*)$"
+            },
+            "min": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)*$",
+              "description": "Lowest library version, inclusive."
+            },
+            "max": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)*$",
+              "description": "First library version that is NOT supported."
+            }
+          }
+        }
+      ]
+    },
+    "snippet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prefix",
+        "description",
+        "body"
+      ],
+      "properties": {
+        "prefix": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "maxLength": 40
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "body": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 120,
+          "items": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "description": "Lines of a VS Code snippet body. ${1:name} is a tab stop and ${TM_FILENAME_BASE} the class name."
+        },
+        "imports": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(static )?[a-z][\\w]*(\\.[\\w]+)+$"
+          },
+          "description": "Classes the body needs. FTC Core adds any the file lacks."
+        },
+        "template": {
+          "type": "boolean",
+          "description": "A whole file (package, imports and class), offered only in a file with no class yet."
+        }
+      }
+    }
+  }
+}

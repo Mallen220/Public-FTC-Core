@@ -1,0 +1,7 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "FTC SDK",
+  "description": "OpModes, motors, drive code, the IMU, sensors and AprilTag setup from the FTC SDK.",
+  "appliesTo": "Every FTC project.",
+  "prefix": "ftc_"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "SolversLib + Pedro Pathing",
+  "description": "SolversLib commands that drive Pedro Pathing 3 paths.",
+  "appliesTo": "SolversLib's Pedro module, version 0.3.6 or newer (Pedro Pathing 3). The OpMode snippets assume the Pedro quickstart's `Constants` class.",
+  "prefix": "solvers_pedro_",
+  "requires": {
+    "allOf": [
+      {
+        "coordinate": "org.solverslib:pedroPathing",
+        "min": "0.3.6"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "goBILDA Pinpoint",
+  "description": "The goBILDA Pinpoint odometry computer built into the FTC SDK.",
+  "appliesTo": "FTC SDK 10.3 and newer, where the Pinpoint driver is built in.",
+  "prefix": "pinpoint_",
+  "requires": {
+    "sdkMin": "10.3"
+  }
+}

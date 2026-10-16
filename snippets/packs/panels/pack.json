@@ -1,0 +1,12 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "Panels",
+  "description": "Panels: configurable variables.",
+  "appliesTo": "Panels (`com.bylazar`).",
+  "prefix": "panels_",
+  "requires": {
+    "anyOf": [
+      "com.bylazar:*"
+    ]
+  }
+}

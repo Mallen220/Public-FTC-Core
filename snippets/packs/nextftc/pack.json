@@ -1,0 +1,19 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "NextFTC",
+  "description": "NextFTC 1: OpModes, subsystems, commands, mecanum driving and control.",
+  "appliesTo": "NextFTC 1.0 or newer (`dev.nextftc`).",
+  "prefix": "nextftc_",
+  "requires": {
+    "anyOf": [
+      {
+        "coordinate": "dev.nextftc:ftc",
+        "min": "1.0.0"
+      },
+      {
+        "coordinate": "dev.nextftc:core",
+        "min": "1.0.0"
+      }
+    ]
+  }
+}

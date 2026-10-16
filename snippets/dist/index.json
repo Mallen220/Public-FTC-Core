@@ -1,0 +1,1393 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-10-16",
+  "packs": [
+    {
+      "schemaVersion": 1,
+      "id": "ftc-dashboard",
+      "name": "FTC Dashboard",
+      "description": "FTC Dashboard: configurable variables, telemetry packets and field drawing.",
+      "appliesTo": "FTC Dashboard or its Sloth build.",
+      "prefix": "dash_",
+      "requires": {
+        "anyOf": [
+          "com.acmerobotics.dashboard:dashboard",
+          "com.acmerobotics.slothboard:dashboard"
+        ]
+      },
+      "snippets": {
+        "Dashboard @Config class": {
+          "prefix": "dash_config",
+          "description": "A class whose public static fields can be edited live on the dashboard.",
+          "body": [
+            "@Config",
+            "public class ${TM_FILENAME_BASE} {",
+            "    public static double ${1:kP} = ${2:0.0};",
+            "    $0",
+            "}"
+          ],
+          "imports": [
+            "com.acmerobotics.dashboard.config.Config"
+          ],
+          "template": true
+        },
+        "Dashboard packet": {
+          "prefix": "dash_packet",
+          "description": "Send a value and a circle on the field view in one telemetry packet.",
+          "body": [
+            "TelemetryPacket packet = new TelemetryPacket();",
+            "packet.put(\"${1:label}\", ${2:value});",
+            "Canvas field = packet.fieldOverlay();",
+            "field.setStroke(\"${3:#3F51B5}\");",
+            "field.strokeCircle(${4:x}, ${5:y}, ${6:9});",
+            "FtcDashboard.getInstance().sendTelemetryPacket(packet);"
+          ],
+          "imports": [
+            "com.acmerobotics.dashboard.FtcDashboard",
+            "com.acmerobotics.dashboard.canvas.Canvas",
+            "com.acmerobotics.dashboard.telemetry.TelemetryPacket"
+          ]
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ftc-sdk",
+      "name": "FTC SDK",
+      "description": "OpModes, motors, drive code, the IMU, sensors and AprilTag setup from the FTC SDK.",
+      "appliesTo": "Every FTC project.",
+      "prefix": "ftc_",
+      "snippets": {
+        "AprilTag detection": {
+          "prefix": "ftc_apriltag",
+          "description": "Start the AprilTag processor on a webcam.",
+          "body": [
+            "AprilTagProcessor ${1:aprilTag} = AprilTagProcessor.easyCreateWithDefaults();",
+            "VisionPortal ${2:visionPortal} = VisionPortal.easyCreateWithDefaults(",
+            "        hardwareMap.get(WebcamName.class, \"${3:Webcam 1}\"), ${1:aprilTag});"
+          ],
+          "imports": [
+            "org.firstinspires.ftc.vision.VisionPortal",
+            "org.firstinspires.ftc.vision.apriltag.AprilTagProcessor",
+            "org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName"
+          ]
+        },
+        "Arcade drive": {
+          "prefix": "ftc_arcade",
+          "description": "Drive with one stick for speed and one for turning.",
+          "body": [
+            "double drive = -gamepad1.left_stick_y;",
+            "double turn = gamepad1.right_stick_x;",
+            "${1:leftDrive}.setPower(Range.clip(drive + turn, -1.0, 1.0));",
+            "${2:rightDrive}.setPower(Range.clip(drive - turn, -1.0, 1.0));"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.util.Range"
+          ]
+        },
+        "Autonomous (LinearOpMode)": {
+          "prefix": "ftc_auto",
+          "description": "An Autonomous OpMode that runs in one runOpMode method.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends LinearOpMode {",
+            "    @Override",
+            "    public void runOpMode() {",
+            "        // Initialize hardware here.",
+            "        $3",
+            "        telemetry.addData(\"Status\", \"Initialized\");",
+            "        telemetry.update();",
+            "",
+            "        waitForStart();",
+            "        if (isStopRequested()) {",
+            "            return;",
+            "        }",
+            "",
+            "        $0",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "com.qualcomm.robotcore.eventloop.opmode.LinearOpMode"
+          ],
+          "template": true
+        },
+        "Autonomous (iterative OpMode)": {
+          "prefix": "ftc_auto_iterative",
+          "description": "An Autonomous OpMode with init, start, loop and stop methods.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends OpMode {",
+            "    private final ElapsedTime runtime = new ElapsedTime();",
+            "",
+            "    @Override",
+            "    public void init() {",
+            "        $3",
+            "    }",
+            "",
+            "    @Override",
+            "    public void start() {",
+            "        runtime.reset();",
+            "    }",
+            "",
+            "    @Override",
+            "    public void loop() {",
+            "        $0",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "com.qualcomm.robotcore.eventloop.opmode.OpMode",
+            "com.qualcomm.robotcore.util.ElapsedTime"
+          ],
+          "template": true
+        },
+        "Bulk reads": {
+          "prefix": "ftc_bulk",
+          "description": "Cache hub reads so each loop talks to the hubs less. In MANUAL mode, clear the cache at the top of every loop.",
+          "body": [
+            "List<LynxModule> allHubs = hardwareMap.getAll(LynxModule.class);",
+            "for (LynxModule hub : allHubs) {",
+            "    hub.setBulkCachingMode(LynxModule.BulkCachingMode.${1|AUTO,MANUAL|});",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.hardware.lynx.LynxModule",
+            "java.util.List"
+          ]
+        },
+        "Color sensor": {
+          "prefix": "ftc_color",
+          "description": "Read a color sensor as red, green, blue and alpha, and as hue, saturation and value.",
+          "body": [
+            "NormalizedColorSensor ${1:colorSensor} = hardwareMap.get(NormalizedColorSensor.class, \"${2:color}\");",
+            "${1:colorSensor}.setGain(${3:2});",
+            "if (${1:colorSensor} instanceof SwitchableLight) {",
+            "    ((SwitchableLight) ${1:colorSensor}).enableLight(true);",
+            "}",
+            "",
+            "NormalizedRGBA colors = ${1:colorSensor}.getNormalizedColors();",
+            "float[] hsv = new float[3];",
+            "Color.colorToHSV(colors.toColor(), hsv);",
+            "telemetry.addData(\"Red\", \"%.3f\", colors.red);",
+            "telemetry.addData(\"Green\", \"%.3f\", colors.green);",
+            "telemetry.addData(\"Blue\", \"%.3f\", colors.blue);",
+            "telemetry.addData(\"Alpha\", \"%.3f\", colors.alpha);",
+            "telemetry.addData(\"Hue\", \"%.3f\", hsv[0]);",
+            "telemetry.addData(\"Saturation\", \"%.3f\", hsv[1]);",
+            "telemetry.addData(\"Value\", \"%.3f\", hsv[2]);"
+          ],
+          "imports": [
+            "android.graphics.Color",
+            "com.qualcomm.robotcore.hardware.NormalizedColorSensor",
+            "com.qualcomm.robotcore.hardware.NormalizedRGBA",
+            "com.qualcomm.robotcore.hardware.SwitchableLight"
+          ]
+        },
+        "Digital channel (limit switch)": {
+          "prefix": "ftc_digital",
+          "description": "Read a digital input. REV touch sensors read false when pressed.",
+          "body": [
+            "DigitalChannel ${1:limitSwitch} = hardwareMap.get(DigitalChannel.class, \"${2:limit_switch}\");",
+            "${1:limitSwitch}.setMode(DigitalChannel.Mode.INPUT);",
+            "boolean pressed = !${1:limitSwitch}.getState();"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.hardware.DigitalChannel"
+          ]
+        },
+        "IMU": {
+          "prefix": "ftc_imu",
+          "description": "Get the built-in IMU and set the hub's orientation on the robot.",
+          "body": [
+            "IMU imu = hardwareMap.get(IMU.class, \"imu\");",
+            "imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(",
+            "        RevHubOrientationOnRobot.LogoFacingDirection.${1|UP,DOWN,LEFT,RIGHT,FORWARD,BACKWARD|},",
+            "        RevHubOrientationOnRobot.UsbFacingDirection.${2|FORWARD,BACKWARD,UP,DOWN,LEFT,RIGHT|})));"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.hardware.IMU",
+            "com.qualcomm.hardware.rev.RevHubOrientationOnRobot"
+          ]
+        },
+        "IMU orientation telemetry": {
+          "prefix": "ftc_imu_telemetry",
+          "description": "Show yaw, pitch, roll and turn rates.",
+          "body": [
+            "YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();",
+            "AngularVelocity angularVelocity = imu.getRobotAngularVelocity(AngleUnit.DEGREES);",
+            "telemetry.addData(\"Yaw (Z)\", \"%.2f Deg.\", orientation.getYaw(AngleUnit.DEGREES));",
+            "telemetry.addData(\"Pitch (X)\", \"%.2f Deg.\", orientation.getPitch(AngleUnit.DEGREES));",
+            "telemetry.addData(\"Roll (Y)\", \"%.2f Deg.\", orientation.getRoll(AngleUnit.DEGREES));",
+            "telemetry.addData(\"Yaw rate\", \"%.2f Deg/Sec\", angularVelocity.zRotationRate);"
+          ],
+          "imports": [
+            "org.firstinspires.ftc.robotcore.external.navigation.AngleUnit",
+            "org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity",
+            "org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles"
+          ]
+        },
+        "Mecanum drive (robot-centric)": {
+          "prefix": "ftc_mecanum",
+          "description": "Drive a mecanum robot from the left stick and right stick x.",
+          "body": [
+            "double axial = -gamepad1.left_stick_y;",
+            "double lateral = gamepad1.left_stick_x;",
+            "double yaw = gamepad1.right_stick_x;",
+            "",
+            "double denominator = Math.max(Math.abs(axial) + Math.abs(lateral) + Math.abs(yaw), 1);",
+            "${1:leftFront}.setPower((axial + lateral + yaw) / denominator);",
+            "${2:leftBack}.setPower((axial - lateral + yaw) / denominator);",
+            "${3:rightFront}.setPower((axial - lateral - yaw) / denominator);",
+            "${4:rightBack}.setPower((axial + lateral - yaw) / denominator);"
+          ]
+        },
+        "Mecanum drive (field-centric)": {
+          "prefix": "ftc_mecanum_field",
+          "description": "Field-centric mecanum drive using the IMU heading.",
+          "body": [
+            "double y = -gamepad1.left_stick_y;",
+            "double x = gamepad1.left_stick_x;",
+            "double rx = gamepad1.right_stick_x;",
+            "",
+            "if (gamepad1.options) {",
+            "    imu.resetYaw();",
+            "}",
+            "",
+            "double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);",
+            "double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);",
+            "double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);",
+            "rotX = rotX * 1.1; // counteract imperfect strafing",
+            "",
+            "double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);",
+            "${1:leftFront}.setPower((rotY + rotX + rx) / denominator);",
+            "${2:leftBack}.setPower((rotY - rotX + rx) / denominator);",
+            "${3:rightFront}.setPower((rotY - rotX - rx) / denominator);",
+            "${4:rightBack}.setPower((rotY + rotX - rx) / denominator);"
+          ],
+          "imports": [
+            "org.firstinspires.ftc.robotcore.external.navigation.AngleUnit"
+          ]
+        },
+        "Mecanum motors setup": {
+          "prefix": "ftc_mecanum_setup",
+          "description": "Get four drive motors and set the direction of each side.",
+          "body": [
+            "DcMotor ${1:leftFront} = hardwareMap.get(DcMotor.class, \"${2:left_front}\");",
+            "DcMotor ${3:leftBack} = hardwareMap.get(DcMotor.class, \"${4:left_back}\");",
+            "DcMotor ${5:rightFront} = hardwareMap.get(DcMotor.class, \"${6:right_front}\");",
+            "DcMotor ${7:rightBack} = hardwareMap.get(DcMotor.class, \"${8:right_back}\");",
+            "",
+            "${1:leftFront}.setDirection(DcMotorSimple.Direction.${9|REVERSE,FORWARD|});",
+            "${3:leftBack}.setDirection(DcMotorSimple.Direction.$9);",
+            "${5:rightFront}.setDirection(DcMotorSimple.Direction.${10|FORWARD,REVERSE|});",
+            "${7:rightBack}.setDirection(DcMotorSimple.Direction.$10);",
+            "$0"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.hardware.DcMotor",
+            "com.qualcomm.robotcore.hardware.DcMotorSimple"
+          ]
+        },
+        "Mechanism class with a hardware map": {
+          "prefix": "ftc_mechanism",
+          "description": "A class that gets its hardware from the HardwareMap in an init method.",
+          "body": [
+            "public class ${TM_FILENAME_BASE} {",
+            "    private ${1:DcMotor} ${2:motor};",
+            "",
+            "    public void init(HardwareMap hardwareMap) {",
+            "        ${2:motor} = hardwareMap.get(${1:DcMotor}.class, \"${3:motor}\");",
+            "        $0",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.hardware.DcMotor",
+            "com.qualcomm.robotcore.hardware.HardwareMap"
+          ],
+          "template": true
+        },
+        "Motor": {
+          "prefix": "ftc_motor",
+          "description": "Declare a motor and get it from the hardware map.",
+          "body": [
+            "DcMotor ${1:motor} = hardwareMap.get(DcMotor.class, \"${2:motor}\");",
+            "${1:motor}.setDirection(DcMotorSimple.Direction.${3|FORWARD,REVERSE|});",
+            "${1:motor}.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.${4|BRAKE,FLOAT|});"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.hardware.DcMotor",
+            "com.qualcomm.robotcore.hardware.DcMotorSimple"
+          ]
+        },
+        "Motor run to position": {
+          "prefix": "ftc_run_to_position",
+          "description": "Move a motor to an encoder target and wait for it.",
+          "body": [
+            "${1:motor}.setTargetPosition(${2:target});",
+            "${1:motor}.setMode(DcMotor.RunMode.RUN_TO_POSITION);",
+            "${1:motor}.setPower(${3:0.5});",
+            "while (opModeIsActive() && ${1:motor}.isBusy()) {",
+            "    telemetry.addData(\"Position\", ${1:motor}.getCurrentPosition());",
+            "    telemetry.addData(\"Target\", ${1:motor}.getTargetPosition());",
+            "    telemetry.update();",
+            "}",
+            "${1:motor}.setPower(0);",
+            "$0"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.hardware.DcMotor"
+          ]
+        },
+        "TeleOp (LinearOpMode)": {
+          "prefix": "ftc_teleop",
+          "description": "A TeleOp OpMode that runs in one runOpMode method.",
+          "body": [
+            "@TeleOp(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:TeleOp}\")",
+            "public class ${TM_FILENAME_BASE} extends LinearOpMode {",
+            "    @Override",
+            "    public void runOpMode() {",
+            "        // Initialize hardware here.",
+            "        $3",
+            "        telemetry.addData(\"Status\", \"Initialized\");",
+            "        telemetry.update();",
+            "",
+            "        waitForStart();",
+            "",
+            "        while (opModeIsActive()) {",
+            "            $0",
+            "            telemetry.update();",
+            "        }",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.TeleOp",
+            "com.qualcomm.robotcore.eventloop.opmode.LinearOpMode"
+          ],
+          "template": true
+        },
+        "TeleOp (iterative OpMode)": {
+          "prefix": "ftc_teleop_iterative",
+          "description": "A TeleOp OpMode with init, start, loop and stop methods.",
+          "body": [
+            "@TeleOp(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:TeleOp}\")",
+            "public class ${TM_FILENAME_BASE} extends OpMode {",
+            "    private final ElapsedTime runtime = new ElapsedTime();",
+            "",
+            "    @Override",
+            "    public void init() {",
+            "        $3",
+            "        telemetry.addData(\"Status\", \"Initialized\");",
+            "    }",
+            "",
+            "    @Override",
+            "    public void start() {",
+            "        runtime.reset();",
+            "    }",
+            "",
+            "    @Override",
+            "    public void loop() {",
+            "        $0",
+            "        telemetry.addData(\"Run time\", runtime.toString());",
+            "    }",
+            "",
+            "    @Override",
+            "    public void stop() {",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.TeleOp",
+            "com.qualcomm.robotcore.eventloop.opmode.OpMode",
+            "com.qualcomm.robotcore.util.ElapsedTime"
+          ],
+          "template": true
+        },
+        "Turn to heading": {
+          "prefix": "ftc_turn_to_heading",
+          "description": "Turn in place to a heading with simple proportional control.",
+          "body": [
+            "double headingError = ${1:targetHeading} - imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);",
+            "while (opModeIsActive() && Math.abs(headingError) > ${2:1.0}) {",
+            "    headingError = ${1:targetHeading} - imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);",
+            "    while (headingError > 180) headingError -= 360;",
+            "    while (headingError <= -180) headingError += 360;",
+            "    double turn = Range.clip(headingError * ${3:0.02}, -${4:0.5}, ${4:0.5});",
+            "    ${5:leftFront}.setPower(-turn);",
+            "    ${6:leftBack}.setPower(-turn);",
+            "    ${7:rightFront}.setPower(turn);",
+            "    ${8:rightBack}.setPower(turn);",
+            "}",
+            "$0"
+          ],
+          "imports": [
+            "org.firstinspires.ftc.robotcore.external.navigation.AngleUnit",
+            "com.qualcomm.robotcore.util.Range"
+          ]
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ftc-sdk-vision-12",
+      "name": "FTC SDK vision (12.0+)",
+      "description": "Reading AprilTag detections in SDK 12.0 and newer.",
+      "appliesTo": "FTC SDK 12.0 and newer (AprilTag detections changed in 12.0).",
+      "prefix": "ftc_",
+      "requires": {
+        "sdkMin": "12.0"
+      },
+      "snippets": {
+        "Find an AprilTag by ID": {
+          "prefix": "ftc_apriltag_find",
+          "description": "Look for one tag ID in the current detections.",
+          "body": [
+            "AprilTagSingleDetection desiredTag = null;",
+            "for (AprilTagDetection detection : ${1:aprilTag}.getDetections()) {",
+            "    if (detection instanceof AprilTagSingleDetection && ((AprilTagSingleDetection) detection).id == ${2:20}) {",
+            "        desiredTag = (AprilTagSingleDetection) detection;",
+            "        break;",
+            "    }",
+            "}",
+            "if (desiredTag != null) {",
+            "    $0",
+            "}"
+          ],
+          "imports": [
+            "org.firstinspires.ftc.vision.apriltag.AprilTagDetection",
+            "org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection"
+          ]
+        },
+        "AprilTag telemetry": {
+          "prefix": "ftc_apriltag_telemetry",
+          "description": "Show each detected tag's ID and position.",
+          "body": [
+            "List<AprilTagDetection> currentDetections = ${1:aprilTag}.getDetections();",
+            "telemetry.addData(\"# AprilTags Detected\", currentDetections.size());",
+            "for (AprilTagDetection detection : currentDetections) {",
+            "    if (detection instanceof AprilTagSingleDetection) {",
+            "        AprilTagSingleDetection tag = (AprilTagSingleDetection) detection;",
+            "        if (tag.metadata != null) {",
+            "            telemetry.addLine(String.format(\"\\n==== (ID %d) %s\", tag.id, tag.metadata.name));",
+            "            telemetry.addLine(String.format(\"XYZ %6.1f %6.1f %6.1f  (inch)\", tag.ftcPose.x, tag.ftcPose.y, tag.ftcPose.z));",
+            "            telemetry.addLine(String.format(\"RBE %6.1f %6.1f %6.1f  (inch, deg, deg)\", tag.ftcPose.range, tag.ftcPose.bearing, tag.ftcPose.elevation));",
+            "        } else {",
+            "            telemetry.addLine(String.format(\"\\n==== (ID %d) Unknown\", tag.id));",
+            "        }",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "java.util.List",
+            "org.firstinspires.ftc.vision.apriltag.AprilTagDetection",
+            "org.firstinspires.ftc.vision.apriltag.AprilTagSingleDetection"
+          ]
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ftc-sdk-vision-legacy",
+      "name": "FTC SDK vision (before 12.0)",
+      "description": "Reading AprilTag detections before SDK 12.0.",
+      "appliesTo": "FTC SDK before 12.0.",
+      "prefix": "ftc_",
+      "requires": {
+        "sdkMax": "12.0"
+      },
+      "snippets": {
+        "Find an AprilTag by ID": {
+          "prefix": "ftc_apriltag_find",
+          "description": "Look for one tag ID in the current detections.",
+          "body": [
+            "AprilTagDetection desiredTag = null;",
+            "for (AprilTagDetection detection : ${1:aprilTag}.getDetections()) {",
+            "    if (detection.metadata != null && detection.id == ${2:20}) {",
+            "        desiredTag = detection;",
+            "        break;",
+            "    }",
+            "}",
+            "if (desiredTag != null) {",
+            "    $0",
+            "}"
+          ],
+          "imports": [
+            "org.firstinspires.ftc.vision.apriltag.AprilTagDetection"
+          ]
+        },
+        "AprilTag telemetry": {
+          "prefix": "ftc_apriltag_telemetry",
+          "description": "Show each detected tag's ID and position.",
+          "body": [
+            "List<AprilTagDetection> currentDetections = ${1:aprilTag}.getDetections();",
+            "telemetry.addData(\"# AprilTags Detected\", currentDetections.size());",
+            "for (AprilTagDetection detection : currentDetections) {",
+            "    if (detection.metadata != null) {",
+            "        telemetry.addLine(String.format(\"\\n==== (ID %d) %s\", detection.id, detection.metadata.name));",
+            "        telemetry.addLine(String.format(\"XYZ %6.1f %6.1f %6.1f  (inch)\", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));",
+            "        telemetry.addLine(String.format(\"RBE %6.1f %6.1f %6.1f  (inch, deg, deg)\", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));",
+            "    } else {",
+            "        telemetry.addLine(String.format(\"\\n==== (ID %d) Unknown\", detection.id));",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "java.util.List",
+            "org.firstinspires.ftc.vision.apriltag.AprilTagDetection"
+          ]
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "gobilda-pinpoint",
+      "name": "goBILDA Pinpoint",
+      "description": "The goBILDA Pinpoint odometry computer built into the FTC SDK.",
+      "appliesTo": "FTC SDK 10.3 and newer, where the Pinpoint driver is built in.",
+      "prefix": "pinpoint_",
+      "requires": {
+        "sdkMin": "10.3"
+      },
+      "snippets": {
+        "Pinpoint setup": {
+          "prefix": "pinpoint_init",
+          "description": "Get the goBILDA Pinpoint and configure its pod offsets, encoders and starting pose.",
+          "body": [
+            "GoBildaPinpointDriver ${1:pinpoint} = hardwareMap.get(GoBildaPinpointDriver.class, \"${2:pinpoint}\");",
+            "${1:pinpoint}.setOffsets(${3:0.0}, ${4:0.0}, DistanceUnit.MM); // X and Y offsets of the pods from the tracking point",
+            "${1:pinpoint}.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.${5|goBILDA_4_BAR_POD,goBILDA_SWINGARM_POD|});",
+            "${1:pinpoint}.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.${6|FORWARD,REVERSED|},",
+            "                                   GoBildaPinpointDriver.EncoderDirection.${7|FORWARD,REVERSED|});",
+            "${1:pinpoint}.resetPosAndIMU();",
+            "${1:pinpoint}.setPosition(new Pose2D(DistanceUnit.INCH, 0, 0, AngleUnit.DEGREES, 0));"
+          ],
+          "imports": [
+            "com.qualcomm.hardware.gobilda.GoBildaPinpointDriver",
+            "org.firstinspires.ftc.robotcore.external.navigation.Pose2D",
+            "org.firstinspires.ftc.robotcore.external.navigation.AngleUnit",
+            "org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit"
+          ]
+        },
+        "Pinpoint read pose": {
+          "prefix": "pinpoint_update",
+          "description": "Update the Pinpoint once per loop and read the robot's pose.",
+          "body": [
+            "${1:pinpoint}.update();",
+            "Pose2D pose = ${1:pinpoint}.getPosition();",
+            "double x = pose.getX(DistanceUnit.INCH);",
+            "double y = pose.getY(DistanceUnit.INCH);",
+            "double heading = pose.getHeading(AngleUnit.DEGREES);"
+          ],
+          "imports": [
+            "org.firstinspires.ftc.robotcore.external.navigation.Pose2D",
+            "org.firstinspires.ftc.robotcore.external.navigation.AngleUnit",
+            "org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit"
+          ]
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "nextftc",
+      "name": "NextFTC",
+      "description": "NextFTC 1: OpModes, subsystems, commands, mecanum driving and control.",
+      "appliesTo": "NextFTC 1.0 or newer (`dev.nextftc`).",
+      "prefix": "nextftc_",
+      "requires": {
+        "anyOf": [
+          {
+            "coordinate": "dev.nextftc:ftc",
+            "min": "1.0.0"
+          },
+          {
+            "coordinate": "dev.nextftc:core",
+            "min": "1.0.0"
+          }
+        ]
+      },
+      "snippets": {
+        "NextFTC Autonomous": {
+          "prefix": "nextftc_auto",
+          "description": "An Autonomous OpMode that schedules a sequence when Start is pressed.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends NextFTCOpMode {",
+            "    public ${TM_FILENAME_BASE}() {",
+            "        addComponents(",
+            "                new SubsystemComponent(${3}),",
+            "                BulkReadComponent.INSTANCE",
+            "        );",
+            "    }",
+            "",
+            "    private Command autonomous() {",
+            "        return new SequentialGroup(",
+            "                $0",
+            "        );",
+            "    }",
+            "",
+            "    @Override",
+            "    public void onStartButtonPressed() {",
+            "        autonomous().schedule();",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "dev.nextftc.ftc.NextFTCOpMode",
+            "dev.nextftc.core.components.SubsystemComponent",
+            "dev.nextftc.ftc.components.BulkReadComponent",
+            "dev.nextftc.core.commands.Command",
+            "dev.nextftc.core.commands.groups.SequentialGroup"
+          ],
+          "template": true
+        },
+        "NextFTC Command": {
+          "prefix": "nextftc_command",
+          "description": "A command class with start, update, stop and isDone.",
+          "body": [
+            "public class ${TM_FILENAME_BASE} extends Command {",
+            "    public ${TM_FILENAME_BASE}() {",
+            "        requires(${1:subsystem});",
+            "    }",
+            "",
+            "    @Override",
+            "    public boolean isDone() {",
+            "        return ${2:false};",
+            "    }",
+            "",
+            "    @Override",
+            "    public void start() {",
+            "        $0",
+            "    }",
+            "",
+            "    @Override",
+            "    public void update() {",
+            "    }",
+            "",
+            "    @Override",
+            "    public void stop(boolean interrupted) {",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "dev.nextftc.core.commands.Command"
+          ],
+          "template": true
+        },
+        "NextFTC control system": {
+          "prefix": "nextftc_control_system",
+          "description": "A control system with a position PID.",
+          "body": [
+            "private final ControlSystem ${1:controller} = ControlSystem.builder()",
+            "        .posPid(${2:0.01}, ${3:0.0}, ${4:0.0})",
+            "        .build();"
+          ],
+          "imports": [
+            "dev.nextftc.control.ControlSystem"
+          ]
+        },
+        "NextFTC mecanum drive": {
+          "prefix": "nextftc_mecanum",
+          "description": "Drive a mecanum robot from the left stick and right stick x.",
+          "body": [
+            "Command driverControlled = new MecanumDriverControlled(",
+            "        ${1:frontLeft},",
+            "        ${2:frontRight},",
+            "        ${3:backLeft},",
+            "        ${4:backRight},",
+            "        Gamepads.gamepad1().leftStickY().negate(),",
+            "        Gamepads.gamepad1().leftStickX(),",
+            "        Gamepads.gamepad1().rightStickX());",
+            "driverControlled.schedule();"
+          ],
+          "imports": [
+            "dev.nextftc.hardware.driving.MecanumDriverControlled",
+            "dev.nextftc.ftc.Gamepads",
+            "dev.nextftc.core.commands.Command"
+          ]
+        },
+        "NextFTC Subsystem": {
+          "prefix": "nextftc_subsystem",
+          "description": "A subsystem as a singleton. initialize runs at init and periodic every loop.",
+          "body": [
+            "public class ${TM_FILENAME_BASE} implements Subsystem {",
+            "    public static final ${TM_FILENAME_BASE} INSTANCE = new ${TM_FILENAME_BASE}();",
+            "",
+            "    private ${TM_FILENAME_BASE}() {",
+            "    }",
+            "",
+            "    @Override",
+            "    public void initialize() {",
+            "        $0",
+            "    }",
+            "",
+            "    @Override",
+            "    public void periodic() {",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "dev.nextftc.core.subsystems.Subsystem"
+          ],
+          "template": true
+        },
+        "NextFTC TeleOp": {
+          "prefix": "nextftc_teleop",
+          "description": "A TeleOp OpMode with the components most teams use.",
+          "body": [
+            "@TeleOp(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:TeleOp}\")",
+            "public class ${TM_FILENAME_BASE} extends NextFTCOpMode {",
+            "    public ${TM_FILENAME_BASE}() {",
+            "        addComponents(",
+            "                new SubsystemComponent(${3}),",
+            "                BulkReadComponent.INSTANCE,",
+            "                BindingsComponent.INSTANCE",
+            "        );",
+            "    }",
+            "",
+            "    @Override",
+            "    public void onInit() {",
+            "        $0",
+            "    }",
+            "",
+            "    @Override",
+            "    public void onStartButtonPressed() {",
+            "    }",
+            "",
+            "    @Override",
+            "    public void onUpdate() {",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.TeleOp",
+            "dev.nextftc.ftc.NextFTCOpMode",
+            "dev.nextftc.core.components.SubsystemComponent",
+            "dev.nextftc.ftc.components.BulkReadComponent",
+            "dev.nextftc.core.components.BindingsComponent"
+          ],
+          "template": true
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "panels",
+      "name": "Panels",
+      "description": "Panels: configurable variables.",
+      "appliesTo": "Panels (`com.bylazar`).",
+      "prefix": "panels_",
+      "requires": {
+        "anyOf": [
+          "com.bylazar:*"
+        ]
+      },
+      "snippets": {
+        "Panels @Configurable class": {
+          "prefix": "panels_configurable",
+          "description": "A class whose public static fields can be edited live in Panels.",
+          "body": [
+            "@Configurable",
+            "public class ${TM_FILENAME_BASE} {",
+            "    public static double ${1:kP} = ${2:0.0};",
+            "    $0",
+            "}"
+          ],
+          "imports": [
+            "com.bylazar.configurables.annotations.Configurable"
+          ],
+          "template": true
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "pedro-pathing",
+      "name": "Pedro Pathing",
+      "description": "Pedro Pathing 3: OpModes, following paths and manual driving.",
+      "appliesTo": "Pedro Pathing 3.0 or newer (`com.pedropathing:core` or `revhub`). Pedro 2 projects get no Pedro snippets, because the API changed. The OpMode snippets assume the quickstart's `Constants` class.",
+      "prefix": "pedro_",
+      "requires": {
+        "anyOf": [
+          {
+            "coordinate": "com.pedropathing:core",
+            "min": "3.0.0"
+          },
+          {
+            "coordinate": "com.pedropathing:revhub",
+            "min": "3.0.0"
+          }
+        ]
+      },
+      "snippets": {
+        "Pedro autonomous": {
+          "prefix": "pedro_auto",
+          "description": "An Autonomous OpMode that follows a chain of paths with a state machine.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends OpMode {",
+            "    private Follower follower;",
+            "    private int pathState;",
+            "",
+            "    // Poses (headings in degrees)",
+            "    private final PoseFactory p = PoseFactory.degrees();",
+            "    private final Pose startPose = p.of(${3:9, 111, 0});",
+            "    private final Pose endPose = p.of(${4:16, 128, 45});",
+            "",
+            "    private Path path1;",
+            "",
+            "    public void buildPaths() {",
+            "        path1 = line(startPose, endPose).linear(startPose, endPose);",
+            "    }",
+            "",
+            "    public void autonomousPathUpdate() {",
+            "        switch (pathState) {",
+            "            case 0:",
+            "                follower.follow(path1);",
+            "                pathState = 1;",
+            "                break;",
+            "            case 1:",
+            "                if (!follower.isBusy()) {",
+            "                    // The path is finished.",
+            "                    $0",
+            "                    pathState = -1;",
+            "                }",
+            "                break;",
+            "        }",
+            "    }",
+            "",
+            "    @Override",
+            "    public void init() {",
+            "        follower = Constants.createFollower(hardwareMap);",
+            "        follower.setPose(startPose);",
+            "        buildPaths();",
+            "    }",
+            "",
+            "    @Override",
+            "    public void start() {",
+            "        pathState = 0;",
+            "    }",
+            "",
+            "    @Override",
+            "    public void loop() {",
+            "        // The follower must be updated every loop.",
+            "        follower.update();",
+            "        autonomousPathUpdate();",
+            "",
+            "        telemetry.addData(\"Path state\", pathState);",
+            "        telemetry.addData(\"X\", follower.pose().x());",
+            "        telemetry.addData(\"Y\", follower.pose().y());",
+            "        telemetry.addData(\"Heading (deg)\", Math.toDegrees(follower.pose().heading()));",
+            "        telemetry.update();",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "com.qualcomm.robotcore.eventloop.opmode.OpMode",
+            "com.pedropathing.follower.Follower",
+            "com.pedropathing.math.Pose",
+            "com.pedropathing.paths.Path",
+            "com.pedropathing.api.PoseFactory",
+            "org.firstinspires.ftc.teamcode.pedroPathing.Constants",
+            "static com.pedropathing.api.Paths.line"
+          ],
+          "template": true
+        },
+        "Pedro follow and wait (LinearOpMode)": {
+          "prefix": "pedro_follow_wait",
+          "description": "Follow a path and wait for it to finish.",
+          "body": [
+            "follower.follow(${1:path});",
+            "while (opModeIsActive() && follower.isBusy()) {",
+            "    follower.update();",
+            "}"
+          ]
+        },
+        "Pedro field-centric drive": {
+          "prefix": "pedro_manual_field",
+          "description": "Drive by hand, relative to the field.",
+          "body": [
+            "follower.manual(ManualDrive.fieldCentric(",
+            "        -gamepad1.left_stick_y,",
+            "        -gamepad1.left_stick_x,",
+            "        -gamepad1.right_stick_x,",
+            "        follower.pose().heading()));"
+          ],
+          "imports": [
+            "com.pedropathing.follower.ManualDrive"
+          ]
+        },
+        "Pedro TeleOp": {
+          "prefix": "pedro_teleop",
+          "description": "A TeleOp OpMode that drives with the Pedro follower, field-centric.",
+          "body": [
+            "@TeleOp(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:TeleOp}\")",
+            "public class ${TM_FILENAME_BASE} extends OpMode {",
+            "    private Follower follower;",
+            "",
+            "    @Override",
+            "    public void init() {",
+            "        follower = Constants.createFollower(hardwareMap);",
+            "        follower.setPose(Pose.zero());",
+            "    }",
+            "",
+            "    @Override",
+            "    public void loop() {",
+            "        // Pedro uses +x forwards, +y left and counterclockwise positive, while the gamepad sticks read",
+            "        // positive to the right and down, so all three axes are negated.",
+            "        follower.manual(ManualDrive.fieldCentric(",
+            "                -gamepad1.left_stick_y,",
+            "                -gamepad1.left_stick_x,",
+            "                -gamepad1.right_stick_x,",
+            "                follower.pose().heading()));",
+            "        follower.update();",
+            "        $0",
+            "        telemetry.addData(\"X\", follower.pose().x());",
+            "        telemetry.addData(\"Y\", follower.pose().y());",
+            "        telemetry.addData(\"Heading (deg)\", Math.toDegrees(follower.pose().heading()));",
+            "        telemetry.update();",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.TeleOp",
+            "com.qualcomm.robotcore.eventloop.opmode.OpMode",
+            "com.pedropathing.follower.Follower",
+            "com.pedropathing.math.Pose",
+            "com.pedropathing.follower.ManualDrive",
+            "org.firstinspires.ftc.teamcode.pedroPathing.Constants"
+          ],
+          "template": true
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "road-runner",
+      "name": "Road Runner",
+      "description": "Road Runner 1.0: trajectories, actions and the TeleOp drive.",
+      "appliesTo": "Road Runner 1.0 (`com.acmerobotics.roadrunner`). The OpMode snippet assumes the quickstart's `MecanumDrive`.",
+      "prefix": "rr_",
+      "requires": {
+        "anyOf": [
+          "com.acmerobotics.roadrunner:*"
+        ]
+      },
+      "snippets": {
+        "Road Runner Action class": {
+          "prefix": "rr_action",
+          "description": "A custom Action. run returns true while it should keep running.",
+          "body": [
+            "public class ${TM_FILENAME_BASE} implements Action {",
+            "    private boolean initialized = false;",
+            "",
+            "    @Override",
+            "    public boolean run(@NonNull TelemetryPacket packet) {",
+            "        if (!initialized) {",
+            "            $0",
+            "            initialized = true;",
+            "        }",
+            "        // Return true to keep running, false when finished.",
+            "        return ${1:false};",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.acmerobotics.roadrunner.Action",
+            "com.acmerobotics.dashboard.telemetry.TelemetryPacket",
+            "androidx.annotation.NonNull"
+          ],
+          "template": true
+        },
+        "Road Runner action loop": {
+          "prefix": "rr_action_loop",
+          "description": "Run actions you keep in a list, one tick per loop, with dashboard telemetry.",
+          "body": [
+            "List<Action> runningActions = new ArrayList<>();",
+            "",
+            "TelemetryPacket packet = new TelemetryPacket();",
+            "List<Action> newActions = new ArrayList<>();",
+            "for (Action action : runningActions) {",
+            "    action.preview(packet.fieldOverlay());",
+            "    if (action.run(packet)) {",
+            "        newActions.add(action);",
+            "    }",
+            "}",
+            "runningActions = newActions;",
+            "FtcDashboard.getInstance().sendTelemetryPacket(packet);"
+          ],
+          "imports": [
+            "com.acmerobotics.roadrunner.Action",
+            "com.acmerobotics.dashboard.FtcDashboard",
+            "com.acmerobotics.dashboard.telemetry.TelemetryPacket",
+            "java.util.ArrayList",
+            "java.util.List"
+          ]
+        },
+        "Road Runner autonomous": {
+          "prefix": "rr_auto",
+          "description": "An Autonomous that builds a trajectory action and runs it.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends LinearOpMode {",
+            "    @Override",
+            "    public void runOpMode() {",
+            "        Pose2d initialPose = new Pose2d(${3:0}, ${4:0}, Math.toRadians(${5:0}));",
+            "        MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);",
+            "",
+            "        Action trajectory = drive.actionBuilder(initialPose)",
+            "                $0",
+            "                .build();",
+            "",
+            "        waitForStart();",
+            "        if (isStopRequested()) {",
+            "            return;",
+            "        }",
+            "",
+            "        Actions.runBlocking(trajectory);",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "com.qualcomm.robotcore.eventloop.opmode.LinearOpMode",
+            "com.acmerobotics.roadrunner.Action",
+            "com.acmerobotics.roadrunner.Pose2d",
+            "com.acmerobotics.roadrunner.ftc.Actions"
+          ],
+          "template": true
+        },
+        "Road Runner TeleOp drive": {
+          "prefix": "rr_teleop_drive",
+          "description": "Drive from the gamepad and update the pose estimate.",
+          "body": [
+            "drive.setDrivePowers(new PoseVelocity2d(",
+            "        new Vector2d(",
+            "                -gamepad1.left_stick_y,",
+            "                -gamepad1.left_stick_x),",
+            "        -gamepad1.right_stick_x));",
+            "drive.updatePoseEstimate();"
+          ],
+          "imports": [
+            "com.acmerobotics.roadrunner.PoseVelocity2d",
+            "com.acmerobotics.roadrunner.Vector2d"
+          ]
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "solverslib",
+      "name": "SolversLib",
+      "description": "SolversLib: command-based OpModes, subsystems, commands, motors and PIDF control.",
+      "appliesTo": "SolversLib (`org.solverslib`).",
+      "prefix": "solvers_",
+      "requires": {
+        "anyOf": [
+          "org.solverslib:*"
+        ]
+      },
+      "snippets": {
+        "SolversLib Autonomous (CommandOpMode)": {
+          "prefix": "solvers_auto",
+          "description": "An Autonomous that schedules a sequence of commands.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends CommandOpMode {",
+            "    @Override",
+            "    public void initialize() {",
+            "        schedule(new SequentialCommandGroup(",
+            "                $0",
+            "        ));",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "com.seattlesolvers.solverslib.command.CommandOpMode",
+            "com.seattlesolvers.solverslib.command.SequentialCommandGroup"
+          ],
+          "template": true
+        },
+        "SolversLib Command": {
+          "prefix": "solvers_command",
+          "description": "A command class with initialize, execute, isFinished and end.",
+          "body": [
+            "public class ${TM_FILENAME_BASE} extends CommandBase {",
+            "    private final ${1:Subsystem} ${2:subsystem};",
+            "",
+            "    public ${TM_FILENAME_BASE}(${1:Subsystem} ${2:subsystem}) {",
+            "        this.${2:subsystem} = ${2:subsystem};",
+            "        addRequirements(${2:subsystem});",
+            "    }",
+            "",
+            "    @Override",
+            "    public void initialize() {",
+            "    }",
+            "",
+            "    @Override",
+            "    public void execute() {",
+            "        $0",
+            "    }",
+            "",
+            "    @Override",
+            "    public boolean isFinished() {",
+            "        return ${3:false};",
+            "    }",
+            "",
+            "    @Override",
+            "    public void end(boolean interrupted) {",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.seattlesolvers.solverslib.command.CommandBase"
+          ],
+          "template": true
+        },
+        "SolversLib Mecanum drive (field-centric)": {
+          "prefix": "solvers_mecanum_field",
+          "description": "Drive relative to the field. The heading is in degrees.",
+          "body": [
+            "${1:drive}.driveFieldCentric(",
+            "        ${2:driver}.getLeftX(),",
+            "        ${2:driver}.getLeftY(),",
+            "        ${2:driver}.getRightX(),",
+            "        ${3:heading}); // heading in degrees"
+          ]
+        },
+        "SolversLib Motor": {
+          "prefix": "solvers_motor",
+          "description": "A Motor with a RawPower run mode.",
+          "body": [
+            "Motor ${1:motor} = new Motor(hardwareMap, \"${2:motor}\");",
+            "${1:motor}.setRunMode(Motor.RunMode.RawPower);",
+            "${1:motor}.setZeroPowerBehavior(Motor.ZeroPowerBehavior.${3|BRAKE,FLOAT|});",
+            "${1:motor}.setInverted(${4:false});"
+          ],
+          "imports": [
+            "com.seattlesolvers.solverslib.hardware.motors.Motor"
+          ]
+        },
+        "SolversLib Motor position control": {
+          "prefix": "solvers_motor_position",
+          "description": "Move a motor to an encoder position.",
+          "body": [
+            "${1:motor}.setRunMode(Motor.RunMode.PositionControl);",
+            "${1:motor}.setPositionCoefficient(${2:0.05});",
+            "${1:motor}.setPositionTolerance(${3:10});",
+            "${1:motor}.setTargetPosition(${4:target});",
+            "${1:motor}.set(${5:0.5});"
+          ],
+          "imports": [
+            "com.seattlesolvers.solverslib.hardware.motors.Motor"
+          ]
+        },
+        "SolversLib PIDF to a target": {
+          "prefix": "solvers_pidf",
+          "description": "Drive a motor toward a target with a PIDF controller until it arrives.",
+          "body": [
+            "PIDFController ${1:controller} = new PIDFController(${2:kP}, ${3:kI}, ${4:kD}, ${5:kF});",
+            "${1:controller}.setTolerance(${6:10});",
+            "${1:controller}.setSetPoint(${7:target});",
+            "while (opModeIsActive() && !${1:controller}.atSetPoint()) {",
+            "    ${8:motor}.set(${1:controller}.calculate(${8:motor}.getCurrentPosition()));",
+            "}",
+            "${8:motor}.set(0);"
+          ],
+          "imports": [
+            "com.seattlesolvers.solverslib.controller.PIDFController"
+          ]
+        },
+        "SolversLib Subsystem": {
+          "prefix": "solvers_subsystem",
+          "description": "A subsystem class. periodic() runs every loop.",
+          "body": [
+            "public class ${TM_FILENAME_BASE} extends SubsystemBase {",
+            "    public ${TM_FILENAME_BASE}(HardwareMap hardwareMap) {",
+            "        $0",
+            "    }",
+            "",
+            "    @Override",
+            "    public void periodic() {",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.seattlesolvers.solverslib.command.SubsystemBase",
+            "com.qualcomm.robotcore.hardware.HardwareMap"
+          ],
+          "template": true
+        },
+        "SolversLib Telemetry data": {
+          "prefix": "solvers_telemetry",
+          "description": "Collect telemetry and send it in one call.",
+          "body": [
+            "TelemetryData ${1:telemetryData} = new TelemetryData(telemetry);",
+            "${1:telemetryData}.addData(\"${2:Label}\", ${3:value});",
+            "${1:telemetryData}.update();"
+          ],
+          "imports": [
+            "com.seattlesolvers.solverslib.util.TelemetryData"
+          ]
+        },
+        "SolversLib TeleOp (CommandOpMode)": {
+          "prefix": "solvers_teleop",
+          "description": "A TeleOp that runs the command scheduler.",
+          "body": [
+            "@TeleOp(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:TeleOp}\")",
+            "public class ${TM_FILENAME_BASE} extends CommandOpMode {",
+            "    private GamepadEx driver;",
+            "",
+            "    @Override",
+            "    public void initialize() {",
+            "        driver = new GamepadEx(gamepad1);",
+            "        $0",
+            "    }",
+            "",
+            "    @Override",
+            "    public void run() {",
+            "        super.run(); // runs the command scheduler",
+            "        telemetry.update();",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.TeleOp",
+            "com.seattlesolvers.solverslib.command.CommandOpMode",
+            "com.seattlesolvers.solverslib.gamepad.GamepadEx"
+          ],
+          "template": true
+        },
+        "SolversLib Timer": {
+          "prefix": "solvers_timer",
+          "description": "A timer that reports when it's done.",
+          "body": [
+            "Timing.Timer ${1:timer} = new Timing.Timer(${2:2}, TimeUnit.SECONDS);",
+            "${1:timer}.start();",
+            "boolean done = ${1:timer}.done();"
+          ],
+          "imports": [
+            "com.seattlesolvers.solverslib.util.Timing",
+            "java.util.concurrent.TimeUnit"
+          ]
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "solverslib-pedro",
+      "name": "SolversLib + Pedro Pathing",
+      "description": "SolversLib commands that drive Pedro Pathing 3 paths.",
+      "appliesTo": "SolversLib's Pedro module, version 0.3.6 or newer (Pedro Pathing 3). The OpMode snippets assume the Pedro quickstart's `Constants` class.",
+      "prefix": "solvers_pedro_",
+      "requires": {
+        "allOf": [
+          {
+            "coordinate": "org.solverslib:pedroPathing",
+            "min": "0.3.6"
+          }
+        ]
+      },
+      "snippets": {
+        "SolversLib + Pedro autonomous": {
+          "prefix": "solvers_pedro_auto",
+          "description": "An Autonomous that follows Pedro paths with SolversLib commands.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends CommandOpMode {",
+            "    private Follower follower;",
+            "",
+            "    // Poses (headings in degrees)",
+            "    private final PoseFactory p = PoseFactory.degrees();",
+            "    private final Pose startPose = p.of(${3:9, 111, 0});",
+            "    private final Pose endPose = p.of(${4:16, 128, 45});",
+            "",
+            "    private Path path1;",
+            "",
+            "    public void buildPaths() {",
+            "        path1 = line(startPose, endPose).linear(startPose, endPose);",
+            "    }",
+            "",
+            "    @Override",
+            "    public void initialize() {",
+            "        super.reset();",
+            "        follower = Constants.createFollower(hardwareMap);",
+            "        follower.setPose(startPose);",
+            "        buildPaths();",
+            "",
+            "        schedule(new SequentialCommandGroup(",
+            "                new FollowPathCommand(follower, path1)",
+            "                $0",
+            "        ));",
+            "    }",
+            "",
+            "    @Override",
+            "    public void run() {",
+            "        super.run();",
+            "        // The follower needs to be updated every loop.",
+            "        follower.update();",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "com.seattlesolvers.solverslib.command.CommandOpMode",
+            "com.seattlesolvers.solverslib.command.SequentialCommandGroup",
+            "com.seattlesolvers.solverslib.pedroCommand.FollowPathCommand",
+            "com.pedropathing.follower.Follower",
+            "com.pedropathing.math.Pose",
+            "com.pedropathing.paths.Path",
+            "com.pedropathing.api.PoseFactory",
+            "org.firstinspires.ftc.teamcode.pedroPathing.Constants",
+            "static com.pedropathing.api.Paths.line"
+          ],
+          "template": true
+        },
+        "SolversLib + Pedro TeleOp": {
+          "prefix": "solvers_pedro_teleop",
+          "description": "A TeleOp that drives the Pedro follower, field-centric.",
+          "body": [
+            "@TeleOp(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:TeleOp}\")",
+            "public class ${TM_FILENAME_BASE} extends CommandOpMode {",
+            "    private Follower follower;",
+            "",
+            "    @Override",
+            "    public void initialize() {",
+            "        follower = Constants.createFollower(hardwareMap);",
+            "        super.reset();",
+            "    }",
+            "",
+            "    @Override",
+            "    public void run() {",
+            "        super.run();",
+            "        // Pedro uses +x forwards, +y left and counterclockwise positive, while the gamepad sticks read",
+            "        // positive to the right and down, so all three axes are negated.",
+            "        follower.manual(ManualDrive.fieldCentric(",
+            "                -gamepad1.left_stick_y,",
+            "                -gamepad1.left_stick_x,",
+            "                -gamepad1.right_stick_x,",
+            "                follower.pose().heading()));",
+            "        follower.update();",
+            "        $0",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.TeleOp",
+            "com.seattlesolvers.solverslib.command.CommandOpMode",
+            "com.pedropathing.follower.Follower",
+            "com.pedropathing.follower.ManualDrive",
+            "org.firstinspires.ftc.teamcode.pedroPathing.Constants"
+          ],
+          "template": true
+        }
+      }
+    }
+  ]
+}

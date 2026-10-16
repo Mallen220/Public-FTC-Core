@@ -1,0 +1,12 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "Road Runner",
+  "description": "Road Runner 1.0: trajectories, actions and the TeleOp drive.",
+  "appliesTo": "Road Runner 1.0 (`com.acmerobotics.roadrunner`). The OpMode snippet assumes the quickstart's `MecanumDrive`.",
+  "prefix": "rr_",
+  "requires": {
+    "anyOf": [
+      "com.acmerobotics.roadrunner:*"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "Pedro Pathing",
+  "description": "Pedro Pathing 3: OpModes, following paths and manual driving.",
+  "appliesTo": "Pedro Pathing 3.0 or newer (`com.pedropathing:core` or `revhub`). Pedro 2 projects get no Pedro snippets, because the API changed. The OpMode snippets assume the quickstart's `Constants` class.",
+  "prefix": "pedro_",
+  "requires": {
+    "anyOf": [
+      {
+        "coordinate": "com.pedropathing:core",
+        "min": "3.0.0"
+      },
+      {
+        "coordinate": "com.pedropathing:revhub",
+        "min": "3.0.0"
+      }
+    ]
+  }
+}

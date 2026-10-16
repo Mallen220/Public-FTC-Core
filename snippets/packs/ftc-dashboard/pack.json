@@ -1,0 +1,13 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "FTC Dashboard",
+  "description": "FTC Dashboard: configurable variables, telemetry packets and field drawing.",
+  "appliesTo": "FTC Dashboard or its Sloth build.",
+  "prefix": "dash_",
+  "requires": {
+    "anyOf": [
+      "com.acmerobotics.dashboard:dashboard",
+      "com.acmerobotics.slothboard:dashboard"
+    ]
+  }
+}

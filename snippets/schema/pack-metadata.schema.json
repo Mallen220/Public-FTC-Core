@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Mallen220/Public-FTC-Core/blob/main/snippets/schema/pack-metadata.schema.json",
+  "title": "FTC Core snippet pack metadata",
+  "description": "The pack.json file in a snippet pack folder. The folder name is the pack id, and every .java file in the folder is one snippet.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "prefix"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "appliesTo": {
+      "type": "string",
+      "maxLength": 300,
+      "description": "Plain-language version of requires, shown in the snippet docs."
+    },
+    "prefix": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*_([a-z0-9]+_)*$",
+      "description": "What every snippet prefix in the pack starts with, such as pedro_. Typing it lists the pack."
+    },
+    "requires": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "When the pack is offered. With no requires it is offered in every FTC project.",
+      "properties": {
+        "anyOf": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/requirement"
+          }
+        },
+        "allOf": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/requirement"
+          }
+        },
+        "sdkMin": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)*$",
+          "description": "Lowest FTC SDK version, inclusive."
+        },
+        "sdkMax": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)*$",
+          "description": "First FTC SDK version the pack is NOT for."
+        }
+      }
+    }
+  },
+  "definitions": {
+    "requirement": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^[\\w.-]+:([\\w.-]+|\\*)$",
+          "description": "group:name, or group:* for any artifact in the group."
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "coordinate"
+          ],
+          "properties": {
+            "coordinate": {
+              "type": "string",
+              "pattern": "^[\\w.-]+:([\\w.-]+|\\*)$"
+            },
+            "min": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)*$",
+              "description": "Lowest library version, inclusive."
+            },
+            "max": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)*$",
+              "description": "First library version that is NOT supported."
+            }
+          }
+        }
+      ]
+    }
+  }
+}
