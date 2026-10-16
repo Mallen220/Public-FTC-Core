@@ -79,9 +79,12 @@ once a day. Check a new snippet against the library's published classes, and say
 
 ## Sending a pull request
 
-Each library is one file in `catalog/manifests`, named after its `id`. To add a version, copy an
-existing entry in `versions` and change it. To add a library, copy a similar manifest. Field
-descriptions are in [the schema](catalog/schema/library-manifest.schema.json).
+Each library is one file in `catalog/manifests`, named after its `id`. To add a library, copy a similar
+manifest. Field descriptions are in [the schema](catalog/schema/library-manifest.schema.json).
+
+New releases don't need an entry: FTC Core finds them in the library's Maven repository. Add one, by
+copying an existing entry in `versions`, only when its artifacts go together differently from the
+release before it or it needs notes.
 
 Then run:
 

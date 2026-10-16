@@ -17,7 +17,8 @@ by hand.
 
 Each library has a manifest in [`catalog/manifests`](../catalog/manifests).
 [CONTRIBUTING.md](../CONTRIBUTING.md) explains how to add or update one. FTC Core downloads the
-latest catalog from GitHub once a day, so new versions show up without an extension update.
+latest catalog from GitHub once a day, and reads each library's Maven repository for newer releases, so
+new versions show up without a change here.
 
 ## Adding, updating and removing
 
