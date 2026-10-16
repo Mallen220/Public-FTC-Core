@@ -16,12 +16,12 @@ const MAVEN_CENTRAL = 'https://repo1.maven.org/maven2';
 const SAFE_VERSION = /^[A-Za-z0-9][A-Za-z0-9._+-]*$/;
 const MAX_LINE = 120;
 
-export function parseVersion(text) {
+function parseVersion(text) {
   const match = /(\d+(?:[._]\d+)*)/.exec(text);
   return match ? match[1].split(/[._]/).map((part) => Number.parseInt(part, 10)) : [];
 }
 
-export function compareVersions(a, b) {
+function compareVersions(a, b) {
   const left = parseVersion(a);
   const right = parseVersion(b);
   for (let i = 0; i < Math.max(left.length, right.length); i++) {
@@ -36,12 +36,12 @@ export function compareVersions(a, b) {
 const newest = (versions) => [...versions].sort(compareVersions).at(-1);
 
 /** Letters before any `+build` suffix mark a pre-release: 1.0.3-beta.1. 0.3.2+0.6.0 is a release. */
-export function isPrerelease(version) {
+function isPrerelease(version) {
   return /[a-z]/i.test(version.split('+')[0]);
 }
 
 /** Versions, `release`, `latest` and `lastUpdated` (yyyy-mm-dd) of a maven-metadata.xml; undefined for anything else. */
-export function parseMetadata(xml) {
+function parseMetadata(xml) {
   if (!/<metadata[\s>]/.test(xml)) {
     return undefined;
   }
@@ -62,7 +62,7 @@ export function parseMetadata(xml) {
  * Where an artifact's metadata is published: the manifest's own verification sources for it, otherwise the
  * library's repositories and Maven Central. The extension looks in the same places.
  */
-export function metadataUrls(manifest, coordinate) {
+function metadataUrls(manifest, coordinate) {
   const [group, name] = coordinate.split(':');
   const suffix = `/${group.replace(/\./g, '/')}/${name}/maven-metadata.xml`;
   const https = (url) => url.startsWith('https://');
@@ -75,7 +75,7 @@ export function metadataUrls(manifest, coordinate) {
 }
 
 /** Artifacts that every release in the manifest gives the same version, such as Sloth and its Load plugin. */
-export function releaseGroups(manifest) {
+function releaseGroups(manifest) {
   const groups = new Map();
   for (const { coordinate } of manifest.artifacts ?? []) {
     const versions = manifest.versions.map((v) => v.artifacts[coordinate] ?? null);
@@ -97,8 +97,8 @@ function knownIssue(manifest, coordinate, version) {
  * their versions for a person to check. `published` maps group:name to parsed metadata (see readMetadata).
  * Returns undefined when there is nothing new, or `{ problem }` when it can't tell.
  */
-export function proposeRelease(manifest, published) {
-  if (manifest.builtIn || manifest.deprecated || !manifest.artifacts?.length) {
+function proposeRelease(manifest, published) {
+  if (manifest.builtIn || !manifest.artifacts?.length) {
     return undefined;
   }
   const stable = manifest.versions.filter((v) => !isPrerelease(v.version));
@@ -213,7 +213,7 @@ function formatField(key, value, indent) {
  * Adds a release at the top of a manifest's `versions`, in the file's own style so the diff is just the new
  * release. Falls back to rewriting the file when the style isn't recognized.
  */
-export function insertRelease(text, entry) {
+function insertRelease(text, entry) {
   const match = /^[ \t]*"versions": \[\r?\n([ \t]*)\{\r?\n([ \t]*)"/m.exec(text);
   if (match) {
     const [, outer, inner] = match;
@@ -233,7 +233,7 @@ export function insertRelease(text, entry) {
   return `${JSON.stringify(manifest, null, 2)}\n`;
 }
 
-export function describe(proposals, problems) {
+function describe(proposals, problems) {
   const sections = proposals.map(
     (p) =>
       `### ${p.manifest.name} ${p.entry.version}\n\nAfter ${p.previous}.\n\n${p.lines.map((l) => `- ${l}`).join('\n')}\n\nRelease notes: ${p.manifest.repository}${p.manifest.repository.startsWith('https://github.com/') ? '/releases' : ''}`,
@@ -264,7 +264,7 @@ async function main() {
   const proposals = [];
   const problems = [];
   for (const { file, manifest } of loadManifests()) {
-    if (manifest.builtIn || manifest.deprecated) {
+    if (manifest.builtIn) {
       continue;
     }
     const published = new Map();
@@ -311,6 +311,4 @@ async function main() {
   }
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  await main();
-}
+await main();

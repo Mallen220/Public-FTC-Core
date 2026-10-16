@@ -37,15 +37,13 @@
           "released": "2026-09-17",
           "artifacts": {
             "com.acmerobotics.slothboard:dashboard": "0.3.2+0.6.0"
-          },
-          "status": "documented"
+          }
         },
         {
           "version": "0.2.4+0.5.1",
           "artifacts": {
             "com.acmerobotics.slothboard:dashboard": "0.2.4+0.5.1"
-          },
-          "status": "documented"
+          }
         }
       ],
       "install": {
@@ -105,22 +103,19 @@
           "released": "2026-05-16",
           "artifacts": {
             "com.acmerobotics.dashboard:dashboard": "0.6.0"
-          },
-          "status": "documented"
+          }
         },
         {
           "version": "0.5.1",
           "artifacts": {
             "com.acmerobotics.dashboard:dashboard": "0.5.1"
-          },
-          "status": "documented"
+          }
         },
         {
           "version": "0.4.17",
           "artifacts": {
             "com.acmerobotics.dashboard:dashboard": "0.4.17"
-          },
-          "status": "documented"
+          }
         }
       ],
       "install": {
@@ -171,8 +166,7 @@
           "sdk": {
             "min": "10.3"
           },
-          "artifacts": {},
-          "status": "documented"
+          "artifacts": {}
         }
       ],
       "sloth": {
@@ -219,8 +213,7 @@
           "artifacts": {
             "dev.nextftc:ftc": "1.1.0",
             "dev.nextftc:hardware": "1.1.0"
-          },
-          "status": "documented"
+          }
         },
         {
           "version": "1.0.1",
@@ -228,8 +221,7 @@
           "artifacts": {
             "dev.nextftc:ftc": "1.0.1",
             "dev.nextftc:hardware": "1.0.1"
-          },
-          "status": "documented"
+          }
         }
       ],
       "install": {
@@ -290,8 +282,7 @@
           "artifacts": {
             "com.bylazar:fullpanels": "1.0.18"
           },
-          "notes": "Panels' update guide requires FTC SDK 12.0.0 and both Maven repositories.",
-          "status": "documented"
+          "notes": "Panels' update guide requires FTC SDK 12.0.0 and both Maven repositories."
         }
       ],
       "install": {
@@ -375,8 +366,7 @@
             "com.pedropathing:revhub": "3.0.1",
             "com.pedropathing:tuning": "1.0.1"
           },
-          "notes": "Same pairing as the Pedro Pathing Quickstart. tuning 1.0.2 has a crash (see known issues).",
-          "status": "documented"
+          "notes": "Same pairing as the Pedro Pathing Quickstart. tuning 1.0.2 has a crash (see known issues)."
         }
       ],
       "install": {
@@ -474,8 +464,7 @@
             "com.acmerobotics.roadrunner:ftc": "0.1.25",
             "com.acmerobotics.roadrunner:core": "1.0.1",
             "com.acmerobotics.roadrunner:actions": "1.0.1"
-          },
-          "status": "documented"
+          }
         }
       ],
       "install": {
@@ -563,16 +552,14 @@
           "artifacts": {
             "dev.frozenmilk.sinister:Sloth": "0.3.2",
             "dev.frozenmilk:Load": "0.3.2"
-          },
-          "status": "documented"
+          }
         },
         {
           "version": "0.2.4",
           "artifacts": {
             "dev.frozenmilk.sinister:Sloth": "0.2.4",
             "dev.frozenmilk:Load": "0.2.4"
-          },
-          "status": "documented"
+          }
         }
       ],
       "install": {
@@ -662,8 +649,7 @@
             "org.solverslib:core": "0.3.6",
             "org.solverslib:pedroPathing": "0.3.6"
           },
-          "notes": "Works with Pedro Pathing 3.0.0 and newer.",
-          "status": "documented"
+          "notes": "Works with Pedro Pathing 3.0.0 and newer."
         },
         {
           "version": "0.3.5",
@@ -671,8 +657,7 @@
             "org.solverslib:core": "0.3.5",
             "org.solverslib:pedroPathing": "0.3.5"
           },
-          "notes": "Works with Pedro Pathing 2.x.",
-          "status": "documented"
+          "notes": "Works with Pedro Pathing 2.x."
         }
       ],
       "install": {

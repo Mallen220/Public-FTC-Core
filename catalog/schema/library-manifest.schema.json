@@ -33,12 +33,6 @@
     "documentation": { "type": "string", "pattern": "^https://" },
     "quickstart": { "type": "string", "pattern": "^https://", "description": "Quickstart project with the files a team copies after installing." },
     "license": { "type": "string" },
-    "deprecated": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["reason"],
-      "properties": { "reason": { "type": "string" }, "replacement": { "type": "string" } }
-    },
     "builtIn": {
       "type": "object",
       "description": "The functionality ships inside the FTC SDK from this version on; nothing is installed.",
@@ -198,10 +192,6 @@
       "required": ["version", "artifacts"],
       "properties": {
         "version": { "type": "string" },
-        "status": {
-          "const": "documented",
-          "description": "Leave it out of manifests. The build writes it into catalog/dist for FTC Core 0.1.5 and older, which need it."
-        },
         "released": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
         "sdk": { "$ref": "#/definitions/range", "description": "Supported FTC SDK versions, when the maintainer declares them." },
         "artifacts": {
