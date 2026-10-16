@@ -23,7 +23,6 @@
   "versions": [
     {
       "version": "sdk",
-      "status": "documented",
       "sdk": {
         "min": "10.3"
       },

@@ -1,0 +1,31 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "nextftc",
+  "name": "NextFTC",
+  "description": "Command-based framework built from commands, subsystems and components, with ready-made hardware commands, package dev.nextftc.",
+  "category": "command-based",
+  "maintainers": [{ "name": "NextFTC", "url": "https://github.com/NextFTC" }],
+  "repository": "https://github.com/NextFTC/NextFTC",
+  "documentation": "https://v1.nextftc.dev/guide/installation",
+  "license": "GPL-3.0",
+  "artifacts": [
+    { "coordinate": "dev.nextftc:ftc", "role": "primary" },
+    { "coordinate": "dev.nextftc:hardware", "role": "optional", "description": "Ready-made commands for motors, servos and other hardware" }
+  ],
+  "versions": [
+    { "version": "1.1.0", "released": "2026-02-23", "artifacts": { "dev.nextftc:ftc": "1.1.0", "dev.nextftc:hardware": "1.1.0" } },
+    { "version": "1.0.1", "released": "2025-10-18", "artifacts": { "dev.nextftc:ftc": "1.0.1", "dev.nextftc:hardware": "1.0.1" } }
+  ],
+  "install": { "target": "teamcode" },
+  "sloth": { "compatibility": "unknown" },
+  "verification": {
+    "sources": [
+      "https://github.com/NextFTC/NextFTC-Docs-v1/blob/main/src/guide/installation.md",
+      "https://repo1.maven.org/maven2/dev/nextftc/ftc/maven-metadata.xml",
+      "https://repo1.maven.org/maven2/dev/nextftc/hardware/maven-metadata.xml"
+    ],
+    "checkedAt": "2026-10-16",
+    "notes": "NextFTC 1 (dev.nextftc). NextFTC 2 is published separately as dev.nextftc.v2 and is still before 1.0; its documentation says v1 and v2 in one project fail to build."
+  }
+}

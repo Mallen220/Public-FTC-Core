@@ -46,6 +46,9 @@ export function validateManifests(entries) {
       errors.push(`${where}: install.target is required for libraries that add dependencies`);
     }
     for (const version of manifest.versions) {
+      if ('status' in version) {
+        errors.push(`${where}: version ${version.version} has a status; leave it out (the build adds it)`);
+      }
       for (const coordinate of Object.keys(version.artifacts)) {
         if (!declared.has(coordinate)) {
           errors.push(`${where}: version ${version.version} lists ${coordinate}, which is not in artifacts`);
@@ -111,7 +114,7 @@ export function buildIndex(entries, previous) {
   const libraries = entries.map((e) => {
     const { $schema, ...rest } = e.manifest;
     void $schema;
-    return rest;
+    return { ...rest, versions: rest.versions.map((v) => ({ ...v, status: 'documented' })) };
   });
   // Keep the old date when nothing changed. The extension ignores a downloaded catalog that looks older
   // than the copy it ships with.

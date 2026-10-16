@@ -97,7 +97,8 @@ A few rules:
 
 - Every coordinate and version must exist in the listed Maven repository.
 - Put the links you checked in `verification.sources` and today's date in `verification.checkedAt`.
-- Use `"status": "documented"` for versions you haven't built in a real project.
+- If the library's Java packages don't start with its Maven groups, list them in `packages`. FTC Core uses
+  them to tell which library a robot crash came from.
 - Don't rename a field or an `id`. Older versions of the extension still read this catalog and these snippets.
 
 Snippets for the library are encouraged but not required. The [Snippets](#snippets) section explains how to add them.

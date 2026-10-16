@@ -55,6 +55,9 @@ uploaded the code but loading it threw an error, and **FTC: Show Build Output** 
 - If it's a known library bug, FTC Core names it. Run **FTC: Fix Known Library Problem**, then do a
   **Full Install**.
 - If your code throws while loading, for example in a static initializer, fix it and hot reload again.
+- If the error comes from a library and none of your code is in the stack trace, FTC Core names the
+  library. **Report Library Crash** opens an earlier report of the same crash on GitHub, or a new one
+  filled in for you to check and submit. Reported crashes become known library problems.
 - Otherwise do a **Full Install**.
 
 ### Other deploy errors

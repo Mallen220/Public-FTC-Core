@@ -16,13 +16,11 @@
   "versions": [
     {
       "version": "0.3.2",
-      "status": "documented",
       "released": "2026-09-17",
       "artifacts": { "dev.frozenmilk.sinister:Sloth": "0.3.2", "dev.frozenmilk:Load": "0.3.2" }
     },
     {
       "version": "0.2.4",
-      "status": "documented",
       "artifacts": { "dev.frozenmilk.sinister:Sloth": "0.2.4", "dev.frozenmilk:Load": "0.2.4" }
     }
   ],

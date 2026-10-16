@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-10-12",
+  "generated": "2026-10-16",
   "libraries": [
     {
       "schemaVersion": 1,
@@ -28,21 +28,24 @@
           "role": "primary"
         }
       ],
+      "packages": [
+        "com.acmerobotics.dashboard"
+      ],
       "versions": [
         {
           "version": "0.3.2+0.6.0",
-          "status": "documented",
           "released": "2026-09-17",
           "artifacts": {
             "com.acmerobotics.slothboard:dashboard": "0.3.2+0.6.0"
-          }
+          },
+          "status": "documented"
         },
         {
           "version": "0.2.4+0.5.1",
-          "status": "documented",
           "artifacts": {
             "com.acmerobotics.slothboard:dashboard": "0.2.4+0.5.1"
-          }
+          },
+          "status": "documented"
         }
       ],
       "install": {
@@ -99,25 +102,25 @@
       "versions": [
         {
           "version": "0.6.0",
-          "status": "documented",
           "released": "2026-05-16",
           "artifacts": {
             "com.acmerobotics.dashboard:dashboard": "0.6.0"
-          }
+          },
+          "status": "documented"
         },
         {
           "version": "0.5.1",
-          "status": "documented",
           "artifacts": {
             "com.acmerobotics.dashboard:dashboard": "0.5.1"
-          }
+          },
+          "status": "documented"
         },
         {
           "version": "0.4.17",
-          "status": "documented",
           "artifacts": {
             "com.acmerobotics.dashboard:dashboard": "0.4.17"
-          }
+          },
+          "status": "documented"
         }
       ],
       "install": {
@@ -137,60 +140,6 @@
         "sources": [
           "https://acmerobotics.github.io/ftc-dashboard/gettingstarted",
           "https://maven.brott.dev/com/acmerobotics/dashboard/dashboard/maven-metadata.xml"
-        ],
-        "checkedAt": "2026-10-11"
-      }
-    },
-    {
-      "schemaVersion": 1,
-      "id": "ftclib",
-      "name": "FTCLib (legacy)",
-      "description": "Original command-based library. No longer updated; new projects should use SolversLib.",
-      "category": "command-based",
-      "maintainers": [
-        {
-          "name": "FTCLib",
-          "url": "https://github.com/FTCLib"
-        }
-      ],
-      "repository": "https://github.com/FTCLib/FTCLib",
-      "documentation": "https://docs.ftclib.org/",
-      "artifacts": [
-        {
-          "coordinate": "org.ftclib.ftclib:core",
-          "role": "primary"
-        }
-      ],
-      "versions": [
-        {
-          "version": "2.1.1",
-          "status": "deprecated",
-          "released": "2023-02-22",
-          "artifacts": {
-            "org.ftclib.ftclib:core": "2.1.1"
-          }
-        }
-      ],
-      "deprecated": {
-        "reason": "FTCLib has had no release since February 2023.",
-        "replacement": "solverslib"
-      },
-      "install": {
-        "target": "teamcode"
-      },
-      "sloth": {
-        "compatibility": "unknown"
-      },
-      "conflicts": [
-        {
-          "coordinate": "org.solverslib:core",
-          "reason": "Do not install FTCLib and SolversLib at the same time."
-        }
-      ],
-      "verification": {
-        "sources": [
-          "https://repo1.maven.org/maven2/org/ftclib/ftclib/core/maven-metadata.xml",
-          "https://docs.seattlesolvers.com/installation.md"
         ],
         "checkedAt": "2026-10-11"
       }
@@ -219,11 +168,11 @@
       "versions": [
         {
           "version": "sdk",
-          "status": "documented",
           "sdk": {
             "min": "10.3"
           },
-          "artifacts": {}
+          "artifacts": {},
+          "status": "documented"
         }
       ],
       "sloth": {
@@ -235,6 +184,68 @@
         ],
         "checkedAt": "2026-10-11",
         "notes": "GoBildaPinpointDriver is present in org.firstinspires.ftc:Hardware 11.0.0 and 12.0.0; the SDK release notes list Pinpoint support as added in 10.3 and Pinpoint v2 support in 11.1."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "nextftc",
+      "name": "NextFTC",
+      "description": "Command-based framework built from commands, subsystems and components, with ready-made hardware commands, package dev.nextftc.",
+      "category": "command-based",
+      "maintainers": [
+        {
+          "name": "NextFTC",
+          "url": "https://github.com/NextFTC"
+        }
+      ],
+      "repository": "https://github.com/NextFTC/NextFTC",
+      "documentation": "https://v1.nextftc.dev/guide/installation",
+      "license": "GPL-3.0",
+      "artifacts": [
+        {
+          "coordinate": "dev.nextftc:ftc",
+          "role": "primary"
+        },
+        {
+          "coordinate": "dev.nextftc:hardware",
+          "role": "optional",
+          "description": "Ready-made commands for motors, servos and other hardware"
+        }
+      ],
+      "versions": [
+        {
+          "version": "1.1.0",
+          "released": "2026-02-23",
+          "artifacts": {
+            "dev.nextftc:ftc": "1.1.0",
+            "dev.nextftc:hardware": "1.1.0"
+          },
+          "status": "documented"
+        },
+        {
+          "version": "1.0.1",
+          "released": "2025-10-18",
+          "artifacts": {
+            "dev.nextftc:ftc": "1.0.1",
+            "dev.nextftc:hardware": "1.0.1"
+          },
+          "status": "documented"
+        }
+      ],
+      "install": {
+        "target": "teamcode"
+      },
+      "sloth": {
+        "compatibility": "unknown"
+      },
+      "verification": {
+        "sources": [
+          "https://github.com/NextFTC/NextFTC-Docs-v1/blob/main/src/guide/installation.md",
+          "https://repo1.maven.org/maven2/dev/nextftc/ftc/maven-metadata.xml",
+          "https://repo1.maven.org/maven2/dev/nextftc/hardware/maven-metadata.xml"
+        ],
+        "checkedAt": "2026-10-16",
+        "notes": "NextFTC 1 (dev.nextftc). NextFTC 2 is published separately as dev.nextftc.v2 and is still before 1.0; its documentation says v1 and v2 in one project fail to build."
       }
     },
     {
@@ -272,7 +283,6 @@
       "versions": [
         {
           "version": "1.0.18",
-          "status": "documented",
           "released": "2026-10-07",
           "sdk": {
             "min": "12.0"
@@ -280,7 +290,8 @@
           "artifacts": {
             "com.bylazar:fullpanels": "1.0.18"
           },
-          "notes": "Panels' update guide requires FTC SDK 12.0.0 and both Maven repositories."
+          "notes": "Panels' update guide requires FTC SDK 12.0.0 and both Maven repositories.",
+          "status": "documented"
         }
       ],
       "install": {
@@ -359,13 +370,13 @@
       "versions": [
         {
           "version": "3.0.1",
-          "status": "documented",
           "released": "2026-09-18",
           "artifacts": {
             "com.pedropathing:revhub": "3.0.1",
             "com.pedropathing:tuning": "1.0.1"
           },
-          "notes": "Same pairing as the Pedro Pathing Quickstart. tuning 1.0.2 has a crash (see known issues)."
+          "notes": "Same pairing as the Pedro Pathing Quickstart. tuning 1.0.2 has a crash (see known issues).",
+          "status": "documented"
         }
       ],
       "install": {
@@ -458,13 +469,13 @@
       "versions": [
         {
           "version": "1.0.1",
-          "status": "documented",
           "released": "2025-08-23",
           "artifacts": {
             "com.acmerobotics.roadrunner:ftc": "0.1.25",
             "com.acmerobotics.roadrunner:core": "1.0.1",
             "com.acmerobotics.roadrunner:actions": "1.0.1"
-          }
+          },
+          "status": "documented"
         }
       ],
       "install": {
@@ -548,20 +559,20 @@
       "versions": [
         {
           "version": "0.3.2",
-          "status": "documented",
           "released": "2026-09-17",
           "artifacts": {
             "dev.frozenmilk.sinister:Sloth": "0.3.2",
             "dev.frozenmilk:Load": "0.3.2"
-          }
+          },
+          "status": "documented"
         },
         {
           "version": "0.2.4",
-          "status": "documented",
           "artifacts": {
             "dev.frozenmilk.sinister:Sloth": "0.2.4",
             "dev.frozenmilk:Load": "0.2.4"
-          }
+          },
+          "status": "documented"
         }
       ],
       "install": {
@@ -612,7 +623,7 @@
       "schemaVersion": 1,
       "id": "solverslib",
       "name": "SolversLib",
-      "description": "Command-based programming framework and utilities (the maintained successor of FTCLib), package com.seattlesolvers.solverslib.",
+      "description": "Command-based programming framework and utilities, package com.seattlesolvers.solverslib.",
       "category": "command-based",
       "maintainers": [
         {
@@ -640,25 +651,28 @@
           "description": "Pedro Pathing integration (needs Pedro Pathing 3.0.0 or newer)"
         }
       ],
+      "packages": [
+        "com.seattlesolvers.solverslib"
+      ],
       "versions": [
         {
           "version": "0.3.6",
-          "status": "documented",
           "released": "2026-09-16",
           "artifacts": {
             "org.solverslib:core": "0.3.6",
             "org.solverslib:pedroPathing": "0.3.6"
           },
-          "notes": "Works with Pedro Pathing 3.0.0 and newer."
+          "notes": "Works with Pedro Pathing 3.0.0 and newer.",
+          "status": "documented"
         },
         {
           "version": "0.3.5",
-          "status": "documented",
           "artifacts": {
             "org.solverslib:core": "0.3.5",
             "org.solverslib:pedroPathing": "0.3.5"
           },
-          "notes": "Works with Pedro Pathing 2.x."
+          "notes": "Works with Pedro Pathing 2.x.",
+          "status": "documented"
         }
       ],
       "install": {
@@ -667,20 +681,6 @@
       "sloth": {
         "compatibility": "unknown"
       },
-      "conflicts": [
-        {
-          "coordinate": "org.ftclib.ftclib:core",
-          "reason": "Do not install FTCLib and SolversLib at the same time."
-        }
-      ],
-      "upgradeNotes": [
-        {
-          "fromVersion": "FTCLib",
-          "toVersion": "0.3.6",
-          "text": "Replace com.arcrobotics.ftclib imports with com.seattlesolvers.solverslib and remove the FTCLib dependency.",
-          "url": "https://docs.seattlesolvers.com/installation"
-        }
-      ],
       "verification": {
         "sources": [
           "https://docs.seattlesolvers.com/installation.md",

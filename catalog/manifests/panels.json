@@ -17,7 +17,6 @@
   "versions": [
     {
       "version": "1.0.18",
-      "status": "documented",
       "released": "2026-10-07",
       "sdk": { "min": "12.0" },
       "artifacts": { "com.bylazar:fullpanels": "1.0.18" },

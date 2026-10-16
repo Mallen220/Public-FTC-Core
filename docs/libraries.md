@@ -11,9 +11,9 @@ by hand.
 | Panels | 1.0.18 (FTC SDK 12.0+) | works |
 | Pedro Pathing | 3.0.1 | |
 | Road Runner | 1.0.1 | works |
+| NextFTC | 1.1.0, 1.0.1 | |
 | SolversLib | 0.3.6, 0.3.5 | |
 | goBILDA Pinpoint | built into FTC SDK 10.3+ | works |
-| FTCLib (legacy) | 2.1.1 | |
 
 Each library has a manifest in [`catalog/manifests`](../catalog/manifests).
 [CONTRIBUTING.md](../CONTRIBUTING.md) explains how to add or update one. FTC Core downloads the

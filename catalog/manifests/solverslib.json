@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "solverslib",
   "name": "SolversLib",
-  "description": "Command-based programming framework and utilities (the maintained successor of FTCLib), package com.seattlesolvers.solverslib.",
+  "description": "Command-based programming framework and utilities, package com.seattlesolvers.solverslib.",
   "category": "command-based",
   "maintainers": [{ "name": "Seattle Solvers (FTC 23511)", "url": "https://github.com/FTC-23511" }],
   "repository": "https://github.com/FTC-23511/SolversLib",
@@ -14,29 +14,22 @@
     { "coordinate": "org.solverslib:core", "role": "primary" },
     { "coordinate": "org.solverslib:pedroPathing", "role": "optional", "description": "Pedro Pathing integration (needs Pedro Pathing 3.0.0 or newer)" }
   ],
+  "packages": ["com.seattlesolvers.solverslib"],
   "versions": [
     {
       "version": "0.3.6",
-      "status": "documented",
       "released": "2026-09-16",
       "artifacts": { "org.solverslib:core": "0.3.6", "org.solverslib:pedroPathing": "0.3.6" },
       "notes": "Works with Pedro Pathing 3.0.0 and newer."
     },
     {
       "version": "0.3.5",
-      "status": "documented",
       "artifacts": { "org.solverslib:core": "0.3.5", "org.solverslib:pedroPathing": "0.3.5" },
       "notes": "Works with Pedro Pathing 2.x."
     }
   ],
   "install": { "target": "teamcode" },
   "sloth": { "compatibility": "unknown" },
-  "conflicts": [
-    { "coordinate": "org.ftclib.ftclib:core", "reason": "Do not install FTCLib and SolversLib at the same time." }
-  ],
-  "upgradeNotes": [
-    { "fromVersion": "FTCLib", "toVersion": "0.3.6", "text": "Replace com.arcrobotics.ftclib imports with com.seattlesolvers.solverslib and remove the FTCLib dependency.", "url": "https://docs.seattlesolvers.com/installation" }
-  ],
   "verification": {
     "sources": [
       "https://docs.seattlesolvers.com/installation.md",

@@ -101,7 +101,7 @@ export function proposeRelease(manifest, published) {
   if (manifest.builtIn || manifest.deprecated || !manifest.artifacts?.length) {
     return undefined;
   }
-  const stable = manifest.versions.filter((v) => v.status === 'tested' || v.status === 'documented');
+  const stable = manifest.versions.filter((v) => !isPrerelease(v.version));
   const latest = (stable.length > 0 ? stable : manifest.versions).reduce((a, b) =>
     compareVersions(b.version, a.version) > 0 ? b : a,
   );
@@ -172,7 +172,6 @@ export function proposeRelease(manifest, published) {
   }
   const entry = {
     version: target,
-    status: 'documented',
     ...(date ? { released: date } : {}),
     ...(latest.sdk ? { sdk: latest.sdk } : {}),
     artifacts,

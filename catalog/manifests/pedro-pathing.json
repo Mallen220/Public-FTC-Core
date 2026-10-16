@@ -17,7 +17,6 @@
   "versions": [
     {
       "version": "3.0.1",
-      "status": "documented",
       "released": "2026-09-18",
       "artifacts": { "com.pedropathing:revhub": "3.0.1", "com.pedropathing:tuning": "1.0.1" },
       "notes": "Same pairing as the Pedro Pathing Quickstart. tuning 1.0.2 has a crash (see known issues)."

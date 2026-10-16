@@ -10,9 +10,10 @@
   "documentation": "https://github.com/Dairy-Foundation/Sloth#readme",
   "mavenRepositories": [{ "name": "Dairy Foundation", "url": "https://repo.dairy.foundation/releases" }],
   "artifacts": [{ "coordinate": "com.acmerobotics.slothboard:dashboard", "role": "primary" }],
+  "packages": ["com.acmerobotics.dashboard"],
   "versions": [
-    { "version": "0.3.2+0.6.0", "status": "documented", "released": "2026-09-17", "artifacts": { "com.acmerobotics.slothboard:dashboard": "0.3.2+0.6.0" } },
-    { "version": "0.2.4+0.5.1", "status": "documented", "artifacts": { "com.acmerobotics.slothboard:dashboard": "0.2.4+0.5.1" } }
+    { "version": "0.3.2+0.6.0", "released": "2026-09-17", "artifacts": { "com.acmerobotics.slothboard:dashboard": "0.3.2+0.6.0" } },
+    { "version": "0.2.4+0.5.1", "artifacts": { "com.acmerobotics.slothboard:dashboard": "0.2.4+0.5.1" } }
   ],
   "install": { "target": "teamcode" },
   "sloth": { "compatibility": "requires-sloth" },

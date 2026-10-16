@@ -11,9 +11,9 @@
   "mavenRepositories": [{ "name": "ACME Robotics", "url": "https://maven.brott.dev/" }],
   "artifacts": [{ "coordinate": "com.acmerobotics.dashboard:dashboard", "role": "primary" }],
   "versions": [
-    { "version": "0.6.0", "status": "documented", "released": "2026-05-16", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.6.0" } },
-    { "version": "0.5.1", "status": "documented", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.5.1" } },
-    { "version": "0.4.17", "status": "documented", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.4.17" } }
+    { "version": "0.6.0", "released": "2026-05-16", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.6.0" } },
+    { "version": "0.5.1", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.5.1" } },
+    { "version": "0.4.17", "artifacts": { "com.acmerobotics.dashboard:dashboard": "0.4.17" } }
   ],
   "install": { "target": "dependencies-file" },
   "sloth": { "compatibility": "variant", "variant": "ftc-dashboard-sloth", "note": "Sloth projects must use the Sloth-compatible build of FTC Dashboard." },
