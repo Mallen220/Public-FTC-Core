@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-10-12",
+  "generated": "2026-10-16",
   "libraries": [
     {
       "schemaVersion": 1,
@@ -357,6 +357,15 @@
         }
       ],
       "versions": [
+        {
+          "version": "3.0.2",
+          "status": "documented",
+          "released": "2026-10-16",
+          "artifacts": {
+            "com.pedropathing:revhub": "3.0.2",
+            "com.pedropathing:tuning": "1.0.1"
+          }
+        },
         {
           "version": "3.0.1",
           "status": "documented",
