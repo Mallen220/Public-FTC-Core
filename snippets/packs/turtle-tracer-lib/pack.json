@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "TurtleTracerLib",
+  "description": "TurtleTracerLib: reading Turtle Tracer .turt files and triggering actions along a Pedro path.",
+  "appliesTo": "TurtleTracerLib 3.0.0 or newer with Pedro Pathing 3. Put .turt files in `src/main/assets/AutoPaths` of the TeamCode module. The OpMode snippets assume the quickstart's `Constants` class.",
+  "prefix": "turtle_",
+  "requires": {
+    "anyOf": [
+      {
+        "coordinate": "com.github.Mallen220:TurtleTracerLib",
+        "min": "3.0.0"
+      }
+    ]
+  }
+}

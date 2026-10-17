@@ -1,0 +1,35 @@
+{
+  "$schema": "../schema/library-manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "ivy",
+  "name": "Ivy",
+  "description": "Pedro Pathing's command-based control flow library, with commands for following Pedro paths.",
+  "category": "command-based",
+  "maintainers": [{ "name": "Pedro Pathing", "url": "https://github.com/Pedro-Pathing" }],
+  "repository": "https://github.com/Pedro-Pathing/Ivy",
+  "documentation": "https://pedropathing.com/docs/ivy",
+  "license": "BSD-3-Clause",
+  "artifacts": [
+    { "coordinate": "com.pedropathing.ivy:pedro", "role": "primary", "description": "Ivy with the Pedro Pathing commands (brings in com.pedropathing.ivy:core)" }
+  ],
+  "versions": [
+    {
+      "version": "1.1.1",
+      "released": "2026-09-10",
+      "artifacts": { "com.pedropathing.ivy:pedro": "1.1.1" }
+    }
+  ],
+  "install": { "target": "dependencies-file" },
+  "sloth": { "compatibility": "unknown" },
+  "requires": [{ "library": "pedro-pathing", "reason": "The Pedro commands in Ivy follow paths with the Pedro Pathing follower." }],
+  "verification": {
+    "sources": [
+      "https://pedropathing.com/docs/ivy",
+      "https://github.com/Pedro-Pathing/Ivy",
+      "https://repo1.maven.org/maven2/com/pedropathing/ivy/pedro/maven-metadata.xml",
+      "https://repo1.maven.org/maven2/com/pedropathing/ivy/core/maven-metadata.xml"
+    ],
+    "checkedAt": "2026-10-16",
+    "notes": "The documentation installs com.pedropathing.ivy:pedro, which depends on com.pedropathing.ivy:core with the same version. The older com.pedropathing:ivy 1.0.0 is a different, earlier artifact. Artifacts are on Maven Central."
+  }
+}

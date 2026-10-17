@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-10-16",
+  "generated": "2026-10-17",
   "packs": [
     {
       "schemaVersion": 1,
@@ -586,6 +586,154 @@
             "org.firstinspires.ftc.robotcore.external.navigation.Pose2D",
             "org.firstinspires.ftc.robotcore.external.navigation.AngleUnit",
             "org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit"
+          ]
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ivy",
+      "name": "Ivy",
+      "description": "Ivy: Pedro Pathing's command-based library. Autonomous OpModes, path commands, groups and custom commands.",
+      "appliesTo": "Ivy 1.1.0 or newer (`com.pedropathing.ivy:pedro`) with Pedro Pathing 3. The OpMode snippets assume the quickstart's `Constants` class.",
+      "prefix": "ivy_",
+      "requires": {
+        "anyOf": [
+          {
+            "coordinate": "com.pedropathing.ivy:pedro",
+            "min": "1.1.0"
+          }
+        ]
+      },
+      "snippets": {
+        "Ivy autonomous": {
+          "prefix": "ivy_auto",
+          "description": "An Autonomous OpMode that runs a sequence of Ivy commands: follow a path, wait, act, follow another path.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends OpMode {",
+            "    private Follower follower;",
+            "",
+            "    // Poses (headings in degrees)",
+            "    private final PoseFactory p = PoseFactory.degrees();",
+            "    private final Pose startPose = p.of(${3:9, 111, 0});",
+            "    private final Pose scorePose = p.of(${4:16, 128, 45});",
+            "    private final Pose parkPose = p.of(${5:40, 120, 90});",
+            "",
+            "    private Path scorePath;",
+            "    private Path parkPath;",
+            "",
+            "    public void buildPaths() {",
+            "        scorePath = line(startPose, scorePose).linear(startPose, scorePose);",
+            "        parkPath = line(scorePose, parkPose).linear(scorePose, parkPose);",
+            "    }",
+            "",
+            "    @Override",
+            "    public void init() {",
+            "        // The scheduler is static, so clear anything left over from an earlier run.",
+            "        Scheduler.reset();",
+            "        follower = Constants.createFollower(hardwareMap);",
+            "        follower.setPose(startPose);",
+            "        buildPaths();",
+            "    }",
+            "",
+            "    @Override",
+            "    public void start() {",
+            "        Scheduler.schedule(",
+            "                sequential(",
+            "                        follow(follower, scorePath),",
+            "                        waitMs(${6:500}),",
+            "                        instant(() -> {",
+            "                            $0",
+            "                        }),",
+            "                        follow(follower, parkPath)",
+            "                )",
+            "        );",
+            "    }",
+            "",
+            "    @Override",
+            "    public void loop() {",
+            "        // Both must run every loop.",
+            "        follower.update();",
+            "        Scheduler.execute();",
+            "",
+            "        telemetry.addData(\"X\", follower.pose().x());",
+            "        telemetry.addData(\"Y\", follower.pose().y());",
+            "        telemetry.addData(\"Heading (deg)\", Math.toDegrees(follower.pose().heading()));",
+            "        telemetry.update();",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "com.qualcomm.robotcore.eventloop.opmode.OpMode",
+            "com.pedropathing.follower.Follower",
+            "com.pedropathing.ivy.Scheduler",
+            "com.pedropathing.math.Pose",
+            "com.pedropathing.paths.Path",
+            "com.pedropathing.api.PoseFactory",
+            "org.firstinspires.ftc.teamcode.pedroPathing.Constants",
+            "static com.pedropathing.api.Paths.line",
+            "static com.pedropathing.ivy.commands.Commands.instant",
+            "static com.pedropathing.ivy.commands.Commands.waitMs",
+            "static com.pedropathing.ivy.groups.Groups.sequential",
+            "static com.pedropathing.ivy.pedro.PedroCommands.follow"
+          ],
+          "template": true
+        },
+        "Ivy custom command": {
+          "prefix": "ivy_command",
+          "description": "A command built from start, execute, done and end callbacks that claims a subsystem while it runs.",
+          "body": [
+            "CommandBuilder ${1:command} = new CommandBuilder()",
+            "        .setStart(() -> {",
+            "            ${2:// Runs once when the command starts.}",
+            "        })",
+            "        .setExecute(() -> {",
+            "            ${3:// Runs every loop while the command is running.}",
+            "        })",
+            "        .setDone(() -> ${4:true})",
+            "        .setEnd(endCondition -> {",
+            "            ${5:// Runs when the command finishes or is interrupted.}",
+            "        })",
+            "        .requiring(${6:subsystem});"
+          ],
+          "imports": [
+            "com.pedropathing.ivy.CommandBuilder"
+          ]
+        },
+        "Ivy follow path": {
+          "prefix": "ivy_follow",
+          "description": "Schedule a command that follows a path and finishes when the follower reaches its end.",
+          "body": [
+            "Scheduler.schedule(follow(follower, ${1:path}));"
+          ],
+          "imports": [
+            "com.pedropathing.ivy.Scheduler",
+            "static com.pedropathing.ivy.pedro.PedroCommands.follow"
+          ]
+        },
+        "Ivy sequence": {
+          "prefix": "ivy_sequence",
+          "description": "Run commands one after another: follow a path, wait, run an action, follow the next path.",
+          "body": [
+            "Scheduler.schedule(",
+            "        sequential(",
+            "                follow(follower, ${1:firstPath}),",
+            "                waitMs(${2:500}),",
+            "                instant(() -> {",
+            "                    $3",
+            "                }),",
+            "                follow(follower, ${4:secondPath})",
+            "        )",
+            ");"
+          ],
+          "imports": [
+            "com.pedropathing.ivy.Scheduler",
+            "static com.pedropathing.ivy.commands.Commands.instant",
+            "static com.pedropathing.ivy.commands.Commands.waitMs",
+            "static com.pedropathing.ivy.groups.Groups.sequential",
+            "static com.pedropathing.ivy.pedro.PedroCommands.follow"
           ]
         }
       }
@@ -1386,6 +1534,151 @@
             "org.firstinspires.ftc.teamcode.pedroPathing.Constants"
           ],
           "template": true
+        }
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "turtle-tracer-lib",
+      "name": "TurtleTracerLib",
+      "description": "TurtleTracerLib: reading Turtle Tracer .turt files and triggering actions along a Pedro path.",
+      "appliesTo": "TurtleTracerLib 3.0.0 or newer with Pedro Pathing 3. Put .turt files in `src/main/assets/AutoPaths` of the TeamCode module. The OpMode snippets assume the quickstart's `Constants` class.",
+      "prefix": "turtle_",
+      "requires": {
+        "anyOf": [
+          {
+            "coordinate": "com.github.Mallen220:TurtleTracerLib",
+            "min": "3.0.0"
+          }
+        ]
+      },
+      "snippets": {
+        "Turtle Tracer autonomous": {
+          "prefix": "turtle_auto",
+          "description": "An Autonomous OpMode that reads its poses from a .turt file, follows a path and runs an action part-way along it.",
+          "body": [
+            "@Autonomous(name = \"${1:${TM_FILENAME_BASE}}\", group = \"${2:Auto}\")",
+            "public class ${TM_FILENAME_BASE} extends OpMode {",
+            "    private Follower follower;",
+            "    private ProgressTracker tracker;",
+            "    private int pathState;",
+            "",
+            "    private Pose startPose;",
+            "    private Pose scorePose;",
+            "    private Path scorePath;",
+            "",
+            "    @Override",
+            "    public void init() {",
+            "        follower = Constants.createFollower(hardwareMap);",
+            "",
+            "        // Poses come from src/main/assets/AutoPaths/${3:AutoRoutine.turt}, so editing the path in",
+            "        // Turtle Tracer changes the robot without regenerating code.",
+            "        TurtleTracerReader reader;",
+            "        try {",
+            "            reader = new TurtleTracerReader(\"${3:AutoRoutine.turt}\", hardwareMap.appContext);",
+            "        } catch (IOException e) {",
+            "            throw new RuntimeException(\"Could not load ${3:AutoRoutine.turt} from assets/AutoPaths\", e);",
+            "        }",
+            "        startPose = reader.get(\"startPoint\");",
+            "        scorePose = reader.get(\"${4:Score}\");",
+            "",
+            "        follower.setPose(startPose);",
+            "        scorePath = line(startPose, scorePose).linear(startPose, scorePose);",
+            "",
+            "        tracker = new ProgressTracker(follower, telemetry);",
+            "        tracker.setCurrentPath(scorePath);",
+            "        tracker.onParametric(${5:0.75}, () -> {",
+            "            $0",
+            "        });",
+            "    }",
+            "",
+            "    @Override",
+            "    public void start() {",
+            "        pathState = 0;",
+            "    }",
+            "",
+            "    @Override",
+            "    public void loop() {",
+            "        // Both must run every loop.",
+            "        follower.update();",
+            "        tracker.update();",
+            "",
+            "        switch (pathState) {",
+            "            case 0:",
+            "                follower.follow(scorePath);",
+            "                pathState = 1;",
+            "                break;",
+            "            case 1:",
+            "                if (!follower.isBusy()) {",
+            "                    // The path is finished.",
+            "                    pathState = -1;",
+            "                }",
+            "                break;",
+            "        }",
+            "",
+            "        telemetry.addData(\"Path state\", pathState);",
+            "        telemetry.addData(\"X\", follower.pose().x());",
+            "        telemetry.addData(\"Y\", follower.pose().y());",
+            "        telemetry.addData(\"Heading (deg)\", Math.toDegrees(follower.pose().heading()));",
+            "        telemetry.update();",
+            "    }",
+            "}"
+          ],
+          "imports": [
+            "com.qualcomm.robotcore.eventloop.opmode.Autonomous",
+            "com.qualcomm.robotcore.eventloop.opmode.OpMode",
+            "com.pedropathing.follower.Follower",
+            "com.pedropathing.math.Pose",
+            "com.pedropathing.paths.Path",
+            "com.turtletracerlib.TurtleTracerReader",
+            "com.turtletracerlib.pathing.ProgressTracker",
+            "org.firstinspires.ftc.teamcode.pedroPathing.Constants",
+            "java.io.IOException",
+            "static com.pedropathing.api.Paths.line"
+          ],
+          "template": true
+        },
+        "Turtle Tracer path events": {
+          "prefix": "turtle_events",
+          "description": "Run actions part-way along a path, after a delay, or when the robot gets near a pose.",
+          "body": [
+            "ProgressTracker ${1:tracker} = new ProgressTracker(follower, telemetry);",
+            "${1:tracker}.setCurrentPath(${2:path});",
+            "",
+            "${1:tracker}.onParametric(${3:0.75}, () -> {",
+            "            ${4:// Runs 75% along the path.}",
+            "        })",
+            "        .onTemporal(${5:500}, () -> {",
+            "            ${6:// Runs 500 ms after the path starts.}",
+            "        })",
+            "        .onSpatial(${7:targetPose}, ${8:2.0}, () -> {",
+            "            ${9:// Runs within 2 inches of the target pose.}",
+            "        });",
+            "",
+            "// In the loop, after follower.update():",
+            "// ${1:tracker}.update();"
+          ],
+          "imports": [
+            "com.turtletracerlib.pathing.ProgressTracker"
+          ]
+        },
+        "Turtle Tracer reader": {
+          "prefix": "turtle_reader",
+          "description": "Load a .turt file from the AutoPaths assets folder and read a pose from it.",
+          "body": [
+            "TurtleTracerReader ${1:reader};",
+            "try {",
+            "    ${1:reader} = new TurtleTracerReader(\"${2:AutoRoutine.turt}\", hardwareMap.appContext);",
+            "} catch (IOException e) {",
+            "    throw new RuntimeException(\"Could not load ${2:AutoRoutine.turt} from assets/AutoPaths\", e);",
+            "}",
+            "Pose ${3:startPose} = ${1:reader}.get(\"${4:startPoint}\");"
+          ],
+          "imports": [
+            "com.pedropathing.math.Pose",
+            "com.turtletracerlib.TurtleTracerReader",
+            "java.io.IOException"
+          ]
         }
       }
     }

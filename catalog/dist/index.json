@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-10-16",
+  "generated": "2026-10-17",
   "libraries": [
     {
       "schemaVersion": 1,
@@ -178,6 +178,60 @@
         ],
         "checkedAt": "2026-10-11",
         "notes": "GoBildaPinpointDriver is present in org.firstinspires.ftc:Hardware 11.0.0 and 12.0.0; the SDK release notes list Pinpoint support as added in 10.3 and Pinpoint v2 support in 11.1."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "ivy",
+      "name": "Ivy",
+      "description": "Pedro Pathing's command-based control flow library, with commands for following Pedro paths.",
+      "category": "command-based",
+      "maintainers": [
+        {
+          "name": "Pedro Pathing",
+          "url": "https://github.com/Pedro-Pathing"
+        }
+      ],
+      "repository": "https://github.com/Pedro-Pathing/Ivy",
+      "documentation": "https://pedropathing.com/docs/ivy",
+      "license": "BSD-3-Clause",
+      "artifacts": [
+        {
+          "coordinate": "com.pedropathing.ivy:pedro",
+          "role": "primary",
+          "description": "Ivy with the Pedro Pathing commands (brings in com.pedropathing.ivy:core)"
+        }
+      ],
+      "versions": [
+        {
+          "version": "1.1.1",
+          "released": "2026-09-10",
+          "artifacts": {
+            "com.pedropathing.ivy:pedro": "1.1.1"
+          }
+        }
+      ],
+      "install": {
+        "target": "dependencies-file"
+      },
+      "sloth": {
+        "compatibility": "unknown"
+      },
+      "requires": [
+        {
+          "library": "pedro-pathing",
+          "reason": "The Pedro commands in Ivy follow paths with the Pedro Pathing follower."
+        }
+      ],
+      "verification": {
+        "sources": [
+          "https://pedropathing.com/docs/ivy",
+          "https://github.com/Pedro-Pathing/Ivy",
+          "https://repo1.maven.org/maven2/com/pedropathing/ivy/pedro/maven-metadata.xml",
+          "https://repo1.maven.org/maven2/com/pedropathing/ivy/core/maven-metadata.xml"
+        ],
+        "checkedAt": "2026-10-16",
+        "notes": "The documentation installs com.pedropathing.ivy:pedro, which depends on com.pedropathing.ivy:core with the same version. The older com.pedropathing:ivy 1.0.0 is a different, earlier artifact. Artifacts are on Maven Central."
       }
     },
     {
@@ -672,6 +726,85 @@
           "https://repo.dairy.foundation/releases/org/solverslib/core/maven-metadata.xml"
         ],
         "checkedAt": "2026-10-11"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "turtle-tracer-lib",
+      "name": "TurtleTracerLib",
+      "description": "Pedro Pathing add-on for running paths planned in Turtle Tracer, with path events and command-based path following.",
+      "category": "pathing",
+      "maintainers": [
+        {
+          "name": "Mallen220",
+          "url": "https://github.com/Mallen220"
+        }
+      ],
+      "repository": "https://github.com/Mallen220/TurtleTracerLib",
+      "documentation": "https://github.com/Mallen220/TurtleTracerLib#readme",
+      "license": "Apache-2.0",
+      "mavenRepositories": [
+        {
+          "name": "Dairy Foundation",
+          "url": "https://repo.dairy.foundation/releases"
+        },
+        {
+          "name": "Panels",
+          "url": "https://mymaven.bylazar.com/releases"
+        },
+        {
+          "name": "JitPack",
+          "url": "https://jitpack.io"
+        }
+      ],
+      "artifacts": [
+        {
+          "coordinate": "com.github.Mallen220:TurtleTracerLib",
+          "role": "primary"
+        }
+      ],
+      "packages": [
+        "com.turtletracerlib"
+      ],
+      "versions": [
+        {
+          "version": "3.0.3",
+          "released": "2026-10-03",
+          "artifacts": {
+            "com.github.Mallen220:TurtleTracerLib": "3.0.3"
+          },
+          "notes": "The README builds it against Pedro Pathing 3.0.1."
+        },
+        {
+          "version": "3.0.0",
+          "released": "2026-09-16",
+          "artifacts": {
+            "com.github.Mallen220:TurtleTracerLib": "3.0.0"
+          }
+        }
+      ],
+      "install": {
+        "target": "teamcode",
+        "postInstall": [
+          "Plan your paths in Turtle Tracer (https://github.com/Mallen220/TurtleTracer/releases), then export Java code or a .turt file to use with TurtleTracerReader."
+        ]
+      },
+      "sloth": {
+        "compatibility": "unknown"
+      },
+      "requires": [
+        {
+          "library": "pedro-pathing",
+          "reason": "TurtleTracerLib is built on Pedro Pathing and does not bring it in."
+        }
+      ],
+      "verification": {
+        "sources": [
+          "https://github.com/Mallen220/TurtleTracerLib",
+          "https://jitpack.io/api/builds/com.github.Mallen220/TurtleTracerLib"
+        ],
+        "checkedAt": "2026-10-16",
+        "notes": "Published through JitPack from the repository's tags; the README also suggests master-SNAPSHOT, which FTC Core does not offer. The library's POM lists no dependencies, so Pedro Pathing has to be installed separately."
       }
     }
   ]

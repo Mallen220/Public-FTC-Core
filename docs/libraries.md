@@ -10,6 +10,8 @@ by hand.
 | FTC Dashboard for Sloth | 0.3.2+0.6.0, 0.2.4+0.5.1 | requires Sloth |
 | Panels | 1.0.18 (FTC SDK 12.0+) | works |
 | Pedro Pathing | 3.0.1 | |
+| Ivy | 1.1.1 | |
+| TurtleTracerLib | 3.0.3, 3.0.0 | |
 | Road Runner | 1.0.1 | works |
 | NextFTC | 1.1.0, 1.0.1 | |
 | SolversLib | 0.3.6, 0.3.5 | |

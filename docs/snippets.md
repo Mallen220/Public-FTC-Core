@@ -88,6 +88,19 @@ Offered for: FTC Dashboard or its Sloth build.
 | `dash_config` | A class whose public static fields can be edited live on the dashboard. |
 | `dash_packet` | Send a value and a circle on the field view in one telemetry packet. |
 
+## Ivy
+
+Ivy: Pedro Pathing's command-based library. Autonomous OpModes, path commands, groups and custom commands.
+
+Offered for: Ivy 1.1.0 or newer (`com.pedropathing.ivy:pedro`) with Pedro Pathing 3. The OpMode snippets assume the quickstart's `Constants` class.
+
+| Prefix | Inserts |
+| --- | --- |
+| `ivy_auto` | An Autonomous OpMode that runs a sequence of Ivy commands: follow a path, wait, act, follow another path. |
+| `ivy_command` | A command built from start, execute, done and end callbacks that claims a subsystem while it runs. |
+| `ivy_follow` | Schedule a command that follows a path and finishes when the follower reaches its end. |
+| `ivy_sequence` | Run commands one after another: follow a path, wait, run an action, follow the next path. |
+
 ## NextFTC
 
 NextFTC 1: OpModes, subsystems, commands, mecanum driving and control.
@@ -168,3 +181,15 @@ Offered for: SolversLib's Pedro module, version 0.3.6 or newer (Pedro Pathing 3)
 | --- | --- |
 | `solvers_pedro_auto` | An Autonomous that follows Pedro paths with SolversLib commands. |
 | `solvers_pedro_teleop` | A TeleOp that drives the Pedro follower, field-centric. |
+
+## TurtleTracerLib
+
+TurtleTracerLib: reading Turtle Tracer .turt files and triggering actions along a Pedro path.
+
+Offered for: TurtleTracerLib 3.0.0 or newer with Pedro Pathing 3. Put .turt files in `src/main/assets/AutoPaths` of the TeamCode module. The OpMode snippets assume the quickstart's `Constants` class.
+
+| Prefix | Inserts |
+| --- | --- |
+| `turtle_auto` | An Autonomous OpMode that reads its poses from a .turt file, follows a path and runs an action part-way along it. |
+| `turtle_events` | Run actions part-way along a path, after a delay, or when the robot gets near a pose. |
+| `turtle_reader` | Load a .turt file from the AutoPaths assets folder and read a pose from it. |

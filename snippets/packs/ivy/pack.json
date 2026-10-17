@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schema/pack-metadata.schema.json",
+  "name": "Ivy",
+  "description": "Ivy: Pedro Pathing's command-based library. Autonomous OpModes, path commands, groups and custom commands.",
+  "appliesTo": "Ivy 1.1.0 or newer (`com.pedropathing.ivy:pedro`) with Pedro Pathing 3. The OpMode snippets assume the quickstart's `Constants` class.",
+  "prefix": "ivy_",
+  "requires": {
+    "anyOf": [
+      {
+        "coordinate": "com.pedropathing.ivy:pedro",
+        "min": "1.1.0"
+      }
+    ]
+  }
+}
