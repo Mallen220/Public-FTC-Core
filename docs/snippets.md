@@ -98,8 +98,6 @@ Offered for: Ivy 1.1.0 or newer (`com.pedropathing.ivy:pedro`) with Pedro Pathin
 | --- | --- |
 | `ivy_auto` | An Autonomous OpMode that runs a sequence of Ivy commands: follow a path, wait, act, follow another path. |
 | `ivy_command` | A command built from start, execute, done and end callbacks that claims a subsystem while it runs. |
-| `ivy_follow` | Schedule a command that follows a path and finishes when the follower reaches its end. |
-| `ivy_sequence` | Run commands one after another: follow a path, wait, run an action, follow the next path. |
 
 ## NextFTC
 

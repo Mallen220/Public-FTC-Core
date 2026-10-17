@@ -701,40 +701,6 @@
           "imports": [
             "com.pedropathing.ivy.CommandBuilder"
           ]
-        },
-        "Ivy follow path": {
-          "prefix": "ivy_follow",
-          "description": "Schedule a command that follows a path and finishes when the follower reaches its end.",
-          "body": [
-            "Scheduler.schedule(follow(follower, ${1:path}));"
-          ],
-          "imports": [
-            "com.pedropathing.ivy.Scheduler",
-            "static com.pedropathing.ivy.pedro.PedroCommands.follow"
-          ]
-        },
-        "Ivy sequence": {
-          "prefix": "ivy_sequence",
-          "description": "Run commands one after another: follow a path, wait, run an action, follow the next path.",
-          "body": [
-            "Scheduler.schedule(",
-            "        sequential(",
-            "                follow(follower, ${1:firstPath}),",
-            "                waitMs(${2:500}),",
-            "                instant(() -> {",
-            "                    $3",
-            "                }),",
-            "                follow(follower, ${4:secondPath})",
-            "        )",
-            ");"
-          ],
-          "imports": [
-            "com.pedropathing.ivy.Scheduler",
-            "static com.pedropathing.ivy.commands.Commands.instant",
-            "static com.pedropathing.ivy.commands.Commands.waitMs",
-            "static com.pedropathing.ivy.groups.Groups.sequential",
-            "static com.pedropathing.ivy.pedro.PedroCommands.follow"
-          ]
         }
       }
     },
