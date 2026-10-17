@@ -17,29 +17,26 @@ by hand.
 | SolversLib | 0.3.6, 0.3.5 | |
 | goBILDA Pinpoint | built into FTC SDK 10.3+ | works |
 
-Each library has a manifest in [`catalog/manifests`](../catalog/manifests).
-[CONTRIBUTING.md](../CONTRIBUTING.md) explains how to add or update one. FTC Core downloads the
-latest catalog from GitHub once a day, and reads each library's Maven repository for newer releases, so
-new versions show up without a change here.
+Each library has a manifest in [`catalog/manifests`](../catalog/manifests). To add or update one, see
+[CONTRIBUTING.md](../CONTRIBUTING.md). FTC Core downloads the catalog from GitHub once a day and checks
+each library's Maven repository for newer releases, so new versions show up without a change here.
 
 ## Adding, updating and removing
 
-Pick a library and FTC Core checks it against your FTC SDK, Sloth and your other libraries. Anything
-the library needs comes along with it; Road Runner brings FTC Dashboard, for example. You see a diff of
-every Gradle file before anything is written. If the sync fails afterwards, FTC Core offers to put the
-old files back. It also keeps the last 20 sets of old files; **FTC: Show Extension Log** says where.
+Pick a library and FTC Core checks it against your FTC SDK, Sloth and other libraries. Anything it needs
+comes along (Road Runner brings FTC Dashboard, for example). You see a diff of every Gradle file before
+anything is written. If the sync fails afterwards, FTC Core offers to restore the old files. It keeps the
+last 20 sets of backups, and **FTC: Show Extension Log** says where.
 
-Edits follow the file's existing style. When a version lives in a variable or a version catalog, FTC
-Core shows you the change to make yourself.
+Edits follow the file's existing style. If a version lives in a variable or version catalog, FTC Core
+shows you the change to make yourself.
 
-Removing a library takes out its dependencies (and the Load plugin, for Sloth). Repositories stay, since
-other libraries may use them.
-
-Dependencies that aren't in the catalog are left alone and work like any other dependency.
+Removing a library takes out its dependencies. Repositories stay, since other libraries may use them.
+Dependencies that aren't in the catalog are left alone.
 
 ## Known problems
 
 The catalog records library versions with bugs that only show up on the robot. When your project uses
-one, FTC Core marks the dependency in the Problems panel with a quick fix, and asks before deploying a
-version that would crash the robot. **FTC: Show Known Library Problems** lists them, and **FTC: Fix
-Known Library Problem** switches to the fixed version.
+one, FTC Core marks it in the Problems panel with a quick fix and asks before deploying it.
+**FTC: Show Known Library Problems** lists them, and **FTC: Fix Known Library Problem** switches to the
+fixed version.
